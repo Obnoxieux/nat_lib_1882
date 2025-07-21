@@ -1,15 +1,24 @@
 package dev.obnx
 
 import gg.jte.TemplateEngine
-import gg.jte.resolve.DirectoryCodeResolver
-import io.ktor.server.application.Application
-import io.ktor.server.application.install
+import gg.jte.resolve.ResourceCodeResolver
+import io.ktor.server.application.*
 import io.ktor.server.jte.*
-import java.nio.file.Path
+import java.nio.file.Paths
 
+/**
+ * Overcomplicated setup due to Ktor class loading in development mode.
+ * Reason: https://github.com/casid/jte/issues/241#issuecomment-2473332186
+ */
 fun Application.configureTemplating() {
     install(Jte) {
-        val resolver = DirectoryCodeResolver(Path.of("templates"))
-        templateEngine = TemplateEngine.create(resolver, gg.jte.ContentType.Html)
+        val classLoader = Thread.currentThread().contextClassLoader
+        val resolver = ResourceCodeResolver("templates", classLoader)
+        templateEngine = TemplateEngine.create(
+            resolver,
+            Paths.get("kte"),
+            gg.jte.ContentType.Html,
+            classLoader
+        )
     }
 }

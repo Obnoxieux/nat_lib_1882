@@ -1,0 +1,17 @@
+@import dev.obnx.model.Page
+@import gg.jte.Content
+
+@param page: Page
+@param content: Content
+
+<!DOCTYPE html >
+<html lang="en">
+<head>
+    @template.blocks.head()
+    <title>${page.title}</title>
+    <meta name="description" content="${page.description}">
+</head>
+<body>
+    ${content}
+</body>
+</html>
