@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Library Catalogue 1882 API</title>
+  <title>National Library Catalogue 1882 API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -920,7 +920,7 @@
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>Library Catalogue 1882 API</h1>
+            <h1>National Library Catalogue 1882 API</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -929,7 +929,7 @@
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
-            <div>REST API for accessing historical library catalogue data from 1882.
+            <div>REST API for accessing historical Damascus National Library catalogue data from its inception in 1882.
 This API provides read-only access to books, authors, genres, and endowments
 from the original documentary source. Only author information can be updated.</div>
           </div>
@@ -1040,9 +1040,9 @@ AuthorsApi *apiInstance = [[AuthorsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Authors-getAuthorById-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.AuthorsApi()
+var api = new NationalLibraryCatalogue1882Api.AuthorsApi()
 var id = ; // {{}} Author ID
 
 var callback = function(error, data, response) {
@@ -1359,9 +1359,9 @@ AuthorsApi *apiInstance = [[AuthorsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Authors-getAuthors-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.AuthorsApi()
+var api = new NationalLibraryCatalogue1882Api.AuthorsApi()
 var opts = { 
   'limit': , // {{}} Maximum number of results to return
   'offset':  // {{}} Number of results to skip
@@ -1711,9 +1711,9 @@ AuthorsApi *apiInstance = [[AuthorsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Authors-getBooksByAuthor-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.AuthorsApi()
+var api = new NationalLibraryCatalogue1882Api.AuthorsApi()
 var id = ; // {{}} Author ID
 var opts = { 
   'limit': , // {{}} Maximum number of results to return
@@ -2097,9 +2097,9 @@ AuthorsApi *apiInstance = [[AuthorsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Authors-updateAuthor-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.AuthorsApi()
+var api = new NationalLibraryCatalogue1882Api.AuthorsApi()
 var body = ; // {{AuthorUpdate}} 
 var id = ; // {{}} Author ID
 
@@ -2471,9 +2471,9 @@ BooksApi *apiInstance = [[BooksApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Books-getBookById-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.BooksApi()
+var api = new NationalLibraryCatalogue1882Api.BooksApi()
 var id = ; // {{}} Book ID
 
 var callback = function(error, data, response) {
@@ -2806,9 +2806,9 @@ BooksApi *apiInstance = [[BooksApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Books-getBooks-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.BooksApi()
+var api = new NationalLibraryCatalogue1882Api.BooksApi()
 var opts = { 
   'genre': , // {{}} Filter by genre ID
   'endowment': , // {{}} Filter by endowment ID
@@ -3265,9 +3265,9 @@ EndowmentsApi *apiInstance = [[EndowmentsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Endowments-getBooksByEndowment-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.EndowmentsApi()
+var api = new NationalLibraryCatalogue1882Api.EndowmentsApi()
 var id = ; // {{}} Endowment ID
 var opts = { 
   'limit': , // {{}} Maximum number of results to return
@@ -3646,9 +3646,9 @@ EndowmentsApi *apiInstance = [[EndowmentsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Endowments-getEndowmentById-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.EndowmentsApi()
+var api = new NationalLibraryCatalogue1882Api.EndowmentsApi()
 var id = ; // {{}} Endowment ID
 
 var callback = function(error, data, response) {
@@ -3953,9 +3953,9 @@ EndowmentsApi *apiInstance = [[EndowmentsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Endowments-getEndowments-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.EndowmentsApi()
+var api = new NationalLibraryCatalogue1882Api.EndowmentsApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4232,9 +4232,9 @@ GenresApi *apiInstance = [[GenresApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Genres-getBooksByGenre-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.GenresApi()
+var api = new NationalLibraryCatalogue1882Api.GenresApi()
 var id = ; // {{}} Genre ID
 var opts = { 
   'limit': , // {{}} Maximum number of results to return
@@ -4613,9 +4613,9 @@ GenresApi *apiInstance = [[GenresApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Genres-getGenreById-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.GenresApi()
+var api = new NationalLibraryCatalogue1882Api.GenresApi()
 var id = ; // {{}} Genre ID
 
 var callback = function(error, data, response) {
@@ -4920,9 +4920,9 @@ GenresApi *apiInstance = [[GenresApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Genres-getGenres-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var LibraryCatalogue1882Api = require('library_catalogue_1882_api');
+                              <pre class="prettyprint"><code class="language-js">var NationalLibraryCatalogue1882Api = require('national_library_catalogue_1882_api');
 
-var api = new LibraryCatalogue1882Api.GenresApi()
+var api = new NationalLibraryCatalogue1882Api.GenresApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
