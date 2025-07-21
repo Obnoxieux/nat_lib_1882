@@ -1,0 +1,4 @@
+### GET Books as JSON
+GET http://localhost:8080/books
+Accept: application/json
+###

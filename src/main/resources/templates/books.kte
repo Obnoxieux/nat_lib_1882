@@ -1,0 +1,17 @@
+@import dev.obnx.model.Page
+@import dev.obnx.model.Book
+@param page: Page
+@param books: List<Book>
+
+@template.layouts.root(page = page, content = @`
+    <h1>Catalogue Data</h1>
+
+    <section>
+        <h2>Books</h2>
+    <ul>
+        @for (book in books)
+            <li>${book.title}</li>
+        @endfor
+    </ul>
+    </section>
+`)
