@@ -1,0 +1,674 @@
+openapi: 3.1.0
+info:
+  title: National Library Catalogue 1882 API
+  description: |
+    REST API for accessing historical Damascus National Library catalogue data from its inception in 1882.
+    This API provides read-only access to books, authors, genres, and endowments 
+    from the original documentary source. Only author information can be updated.
+  version: 1.0.0
+  contact:
+    name: Library Catalogue API
+servers:
+  - url: 'http://localhost:8080'
+    description: Development server
+  - url: 'https://api.example.com'
+    description: Production server
+
+paths:
+  # Books endpoints
+  /books:
+    get:
+      summary: List all books
+      description: Retrieve a list of all books in the catalogue
+      operationId: getBooks
+      tags:
+        - books
+      parameters:
+        - name: genre
+          in: query
+          description: Filter by genre ID
+          schema:
+            type: integer
+            format: int64
+        - name: endowment
+          in: query
+          description: Filter by endowment ID
+          schema:
+            type: integer
+            format: int64
+        - name: manuscript
+          in: query
+          description: Filter by manuscript status
+          schema:
+            type: boolean
+        - name: print
+          in: query
+          description: Filter by print status
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+                  total:
+                    type: integer
+                    description: Total number of books matching the criteria
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /books/{id}:
+    get:
+      summary: Get a specific book
+      description: Retrieve details of a specific book by ID
+      operationId: getBookById
+      tags:
+        - books
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Book ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Authors endpoints
+  /authors:
+    get:
+      summary: List all authors
+      description: Retrieve a list of all authors in the catalogue
+      operationId: getAuthors
+      tags:
+        - authors
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Author'
+                  total:
+                    type: integer
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /authors/{id}:
+    get:
+      summary: Get a specific author
+      description: Retrieve details of a specific author by ID
+      operationId: getAuthorById
+      tags:
+        - authors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Author ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    patch:
+      summary: Update an author
+      description: Update author information (only endpoint that allows modifications)
+      operationId: updateAuthor
+      tags:
+        - authors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Author ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorUpdate'
+      responses:
+        '200':
+          description: Author updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /authors/{id}/books:
+    get:
+      summary: Get books by an author
+      description: Retrieve all books written by a specific author
+      operationId: getBooksByAuthor
+      tags:
+        - authors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Author ID
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+                  total:
+                    type: integer
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Genres endpoints
+  /genres:
+    get:
+      summary: List all genres
+      description: Retrieve a list of all genres in the catalogue
+      operationId: getGenres
+      tags:
+        - genres
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /genres/{id}:
+    get:
+      summary: Get a specific genre
+      description: Retrieve details of a specific genre by ID
+      operationId: getGenreById
+      tags:
+        - genres
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Genre ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /genres/{id}/books:
+    get:
+      summary: Get books by genre
+      description: Retrieve all books in a specific genre
+      operationId: getBooksByGenre
+      tags:
+        - genres
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Genre ID
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+                  total:
+                    type: integer
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Endowments endpoints
+  /endowments:
+    get:
+      summary: List all endowments
+      description: Retrieve a list of all endowments in the catalogue
+      operationId: getEndowments
+      tags:
+        - endowments
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Endowment'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /endowments/{id}:
+    get:
+      summary: Get a specific endowment
+      description: Retrieve details of a specific endowment by ID
+      operationId: getEndowmentById
+      tags:
+        - endowments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Endowment ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endowment'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /endowments/{id}/books:
+    get:
+      summary: Get books by endowment
+      description: Retrieve all books from a specific endowment
+      operationId: getBooksByEndowment
+      tags:
+        - endowments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Endowment ID
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+                  total:
+                    type: integer
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Book:
+      type: object
+      required:
+        - id
+        - number
+        - title
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the book
+        number:
+          type: integer
+          format: int64
+          description: Catalogue number
+        title:
+          type: string
+          maxLength: 2048
+          description: Book title
+        author:
+          type: string
+          maxLength: 255
+          nullable: true
+          description: Author name (redundant field, see authors relation)
+        manuscript:
+          type: boolean
+          nullable: true
+          description: Whether the book is a manuscript
+        print:
+          type: boolean
+          nullable: true
+          description: Whether the book is printed
+        comment:
+          type: string
+          maxLength: 2048
+          nullable: true
+          description: General comment
+        editor_comment:
+          type: string
+          maxLength: 2048
+          nullable: true
+          description: Editor's comment
+        volume:
+          type: string
+          maxLength: 50
+          nullable: true
+          description: Volume information
+        genre:
+          allOf:
+            - $ref: '#/components/schemas/Genre'
+          nullable: true
+          description: Book genre
+        endowment:
+          allOf:
+            - $ref: '#/components/schemas/Endowment'
+          nullable: true
+          description: Book endowment
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+          description: Authors of the book
+      example:
+        id: 1
+        number: 234
+        title: "كتاب الأغاني"
+        author: "الأصفهاني، أبو الفرج"
+        manuscript: true
+        print: false
+        comment: "نسخة مخطوطة قديمة"
+        editor_comment: "حالة جيدة، خط واضح"
+        volume: "الجزء الأول"
+        genre:
+          id: 1
+          name: "الأدب والشعر"
+        endowment:
+          id: 1
+          name: "مكتبة الخديوي"
+        authors:
+          - id: 1
+            name: "الأصفهاني، أبو الفرج"
+
+    Author:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the author
+        name:
+          type: string
+          maxLength: 255
+          description: Author's name
+      example:
+        id: 1
+        name: "الأصفهاني، أبو الفرج"
+
+    AuthorUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          description: Author's name
+      example:
+        name: "الأصفهاني، أبو الفرج علي بن الحسين"
+
+    Genre:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the genre
+        name:
+          type: string
+          maxLength: 255
+          description: Genre name
+      example:
+        id: 1
+        name: "الأدب والشعر"
+
+    Endowment:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the endowment
+        name:
+          type: string
+          maxLength: 255
+          description: Endowment name
+      example:
+        id: 1
+        name: "مكتبة الخديوي"
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+      example:
+        error: "NOT_FOUND"
+        message: "Book with ID 999 not found"
+        details: "The requested resource does not exist in the catalogue"
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+tags:
+  - name: books
+    description: Operations related to books in the catalogue
+  - name: authors
+    description: Operations related to authors
+  - name: genres
+    description: Operations related to book genres
+  - name: endowments
+    description: Operations related to library endowments
