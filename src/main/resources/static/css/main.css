@@ -2,3 +2,5 @@
 
 @import "partials/overrides.css";
 @import "partials/footer.css";
+
+@import "theme/colors.css";

@@ -1,0 +1,14 @@
+{
+  "short_name": "PubLib 1882",
+  "name": "Damascus Public Library Catalogue 1882",
+  "description": "Searchable database and REST API with historical catalogue data",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "prefer_related_applications": false,
+  "theme_color": "#532c2e",
+  "icons": [
+    { "src": "/static/png/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/static/png/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/static/svg/icon.svg", "type": "image/svg+xml", "sizes": "512x512", "purpose": "maskable"}
+  ]
+}
