@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.ktor.server.auth)
     implementation(libs.ktor.server.openapi)
     implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.caching.headers)
     implementation(libs.ktor.server.jte)
     implementation(libs.gg.kte)
     implementation(libs.logback.classic)

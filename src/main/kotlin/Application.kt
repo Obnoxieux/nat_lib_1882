@@ -23,4 +23,5 @@ fun Application.module() {
     configureHTTP()
     configureRouting()
     configureTemplating()
+    configureCaching()
 }
