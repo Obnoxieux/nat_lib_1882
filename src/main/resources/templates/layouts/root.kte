@@ -14,8 +14,14 @@
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    ${content}
+@template.blocks.nav()
 
-    @template.blocks.footer()
+<hr>
+
+${content}
+
+<hr>
+
+@template.blocks.footer()
 </body>
 </html>

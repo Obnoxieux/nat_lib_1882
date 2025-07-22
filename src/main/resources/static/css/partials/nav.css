@@ -1,0 +1,9 @@
+.main-nav {
+    .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        font-size: var(--font-size-large);
+    }
+}
