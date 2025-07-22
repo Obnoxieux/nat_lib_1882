@@ -1,0 +1,64 @@
+<details class="book-column-info">
+    <summary>Detailed Column information</summary>
+    <p>More information regarding the data:</p>
+    <ul class="book-column-info-list">
+        <li>
+            <dl>
+                <dt>ID</dt>
+                <dd>Database identifier for the book, set automatically.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Number</dt>
+                <dd>Number in the source document, starts at <code>1</code> for every genre.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Title</dt>
+                <dd>Title of the book as in the source document.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Author</dt>
+                <dd>Name of the author as in the source document.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Manuscript/Print</dt>
+                <dd>
+                    Simple binary value in the source document
+                    (some books have both set to <code>true</code>).
+                </dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Volume</dt>
+                <dd>Volume number in the source document.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Comment</dt>
+                <dd>Comment as present in the source document.</dd>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt>Editor Comment</dt>
+                <dd>Comment added while creating the database by editor.</dd>
+            </dl>
+        </li>
+    </ul>
+</details>

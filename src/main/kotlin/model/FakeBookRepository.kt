@@ -9,41 +9,41 @@ class FakeBookRepository : BookRepository {
             1, 1, "The Hobbit", "J.R.R. Tolkien",
             manuscript = true,
             print = true,
-            comment = null,
-            editorComment = null,
-            volume = null
+            comment = "worn and used",
+            editorComment = "incomplete, damaged",
+            volume = 1
         ),
         Book(
             2, 2, "The Lord of the Rings", "J.R.R. Tolkien",
             manuscript = true,
-            print = true,
+            print = false,
             comment = null,
-            editorComment = null,
-            volume = null
+            editorComment = "incomprehensible",
+            volume = 3
         ),
         Book(
             3, 3, "The Hitchhiker's Guide to the Galaxy", "John Doe",
-            manuscript = true,
+            manuscript = false,
             print = true,
             comment = null,
             editorComment = null,
-            volume = null
+            volume = 5
         ),
         Book(
             4, 4, "The Adventures of Huckleberry Finn", "Mark Twain",
-            manuscript = true,
+            manuscript = false,
             print = true,
             comment = null,
             editorComment = null,
-            volume = null
+            volume = 6
         ),
         Book(
             5, 5, "The Da Vinci Code", "Dan Brown",
-            manuscript = true,
+            manuscript = false,
             print = true,
             comment = null,
             editorComment = null,
-            volume = null
+            volume = 2
         ),
     )
 

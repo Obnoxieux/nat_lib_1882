@@ -1,0 +1,24 @@
+.book-column-info {
+    margin: 2rem 0;
+
+    .book-column-info-list {
+        li {
+            margin: 0.5rem 0;
+        }
+
+        dl {
+            dt {
+                font-weight: var(--font-weight-bold);
+            }
+
+            display: grid;
+            grid-template-columns: 10rem 1fr;
+        }
+    }
+}
+
+.books-table-section {
+   .books-table-header {
+       margin-bottom: 1.5rem;
+   }
+}

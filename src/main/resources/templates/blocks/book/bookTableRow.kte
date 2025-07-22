@@ -1,0 +1,26 @@
+@import dev.obnx.model.Book
+@param book: Book
+
+<tr>
+    <td>${book.id}</td>
+    <td>${book.number}</td>
+    <td>${book.title}</td>
+    <td>${book.author}</td>
+    <td>ENDOWMENT</td>
+
+    @if(book.manuscript)
+        <td>✅</td>
+    @else
+        <td>❌</td>
+    @endif
+
+    @if(book.print)
+        <td>✅</td>
+    @else
+        <td>❌</td>
+    @endif
+
+    <td>${book.volume}</td>
+    <td>${book.comment}</td>
+    <td>${book.editorComment}</td>
+</tr>

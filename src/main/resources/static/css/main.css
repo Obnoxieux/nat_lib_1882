@@ -3,6 +3,7 @@
 @import "partials/overrides.css";
 @import "partials/footer.css";
 @import "partials/nav.css";
+@import "partials/book-table.css";
 
 @import "theme/colors.css";
 @import "theme/typography.css";

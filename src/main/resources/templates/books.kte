@@ -6,12 +6,33 @@
 @template.layouts.root(page = page, content = @`
     <h1>Catalogue Data</h1>
 
-    <section>
-        <h2>Books</h2>
-    <ul>
-        @for (book in books)
-            <li>${book.title}</li>
-        @endfor
-    </ul>
+    <section class="books-table-section">
+        <h2 class="books-table-header">Table View</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Number</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Endowment</th>
+                <th>Manuscript</th>
+                <th>Print</th>
+                <th>Volume</th>
+                <th>Comment</th>
+                <th>Editor Comment</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @for (book in books)
+                @template.blocks.book.bookTableRow(book = book)
+            @endfor
+            </tbody>
+        </table>
+
+        @template.blocks.book.bookInfoSection()
+
     </section>
 `)
