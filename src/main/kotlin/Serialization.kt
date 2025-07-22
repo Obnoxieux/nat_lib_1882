@@ -7,6 +7,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.jte.JteContent
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.resources.Resources
 import io.ktor.server.resources.get
 import io.ktor.server.response.respond
 import io.ktor.server.routing.*

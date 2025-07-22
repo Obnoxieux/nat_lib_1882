@@ -16,8 +16,6 @@ fun Application.configureRouting() {
 //            call.respondText(text = "An internal error occurred.", status = HttpStatusCode.InternalServerError)
 //        }
     }
-    install(Resources)
-
 
     routing {
         staticResources("/static", "static")
@@ -28,6 +26,22 @@ fun Application.configureRouting() {
                 description = "Searchable database and REST API with historical catalogue data"
             )
             call.respond(JteContent("index.kte", mapOf("page" to page)))
+        }
+
+        get("/impressum") {
+            val page = Page(
+                title = "Impressum",
+                description = "legal notice according to German law"
+            )
+            call.respond(JteContent("impressum.kte", mapOf("page" to page)))
+        }
+
+        get("/privacy") {
+            val page = Page(
+                title = "Datenschutzerklärung",
+                description = "GDPR privacy statement"
+            )
+            call.respond(JteContent("privacy.kte", mapOf("page" to page)))
         }
     }
 }

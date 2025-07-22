@@ -15,5 +15,7 @@
 </head>
 <body>
     ${content}
+
+    @template.blocks.footer()
 </body>
 </html>

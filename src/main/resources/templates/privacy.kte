@@ -1,0 +1,7 @@
+@import dev.obnx.model.Page
+@param page: Page
+
+@template.layouts.root(page = page, content = @`
+    <h1>Datenschutzerklärung</h1>
+    <p>GDPR Privacy statement</p>
+`)
