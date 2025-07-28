@@ -260,3 +260,4 @@ Temporary Items
 /pg_data/
 /jte-classes/
 /kte/
+.env

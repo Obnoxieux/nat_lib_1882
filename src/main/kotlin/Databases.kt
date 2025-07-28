@@ -1,25 +1,19 @@
 package dev.obnx
 
-import io.ktor.http.*
-import io.ktor.resources.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.*
-import io.ktor.server.plugins.calllogging.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.di.*
-import io.ktor.server.plugins.openapi.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.request.*
-import io.ktor.server.resources.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import java.sql.Connection
-import java.sql.DriverManager
-import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.*
-import org.slf4j.event.*
+import org.jetbrains.exposed.sql.Database
 
+/**
+ * Connects to the Postgres database and throws exception if environment is not set.
+ */
 fun Application.configureDatabases() {
+    val dbUser = environment.config.property("ktor.database.user").getString()
+    val dbPassword = environment.config.property("ktor.database.password").getString()
+    val dbUrl = environment.config.property("ktor.database.url").getString()
 
+    Database.connect(
+        url = dbUrl,
+        user = dbUser,
+        password = dbPassword,
+    )
 }
