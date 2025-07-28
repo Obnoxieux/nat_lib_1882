@@ -4,6 +4,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
 interface BookRepository {
-    fun allBooks(): List<Book>
-    fun bookByID(id: Long): Book?
+    suspend fun allBooks(): List<Book>
+    suspend fun bookByID(id: Long): Book?
 }

@@ -1,8 +1,8 @@
 package dev.obnx
 
-import dev.obnx.model.FakeBookRepository
+import dev.obnx.model.PostgresBookRepository
 import io.ktor.server.application.*
-import io.ktor.server.resources.Resources
+import io.ktor.server.resources.*
 import kotlinx.serialization.ExperimentalSerializationApi
 
 fun main(args: Array<String>) {
@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
 
 @ExperimentalSerializationApi
 fun Application.module() {
-    val bookRepository = FakeBookRepository()
+    val bookRepository = PostgresBookRepository()
 
     install(Resources)
 

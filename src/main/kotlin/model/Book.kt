@@ -16,5 +16,5 @@ data class Book(
     val comment: String?,
     @SerialName("editor_comment")
     val editorComment: String?,
-    val volume: Long?
+    val volume: String?
 )

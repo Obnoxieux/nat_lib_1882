@@ -11,7 +11,7 @@ class FakeBookRepository : BookRepository {
             print = true,
             comment = "worn and used",
             editorComment = "incomplete, damaged",
-            volume = 1
+            volume = "1"
         ),
         Book(
             2, 2, "The Lord of the Rings", "J.R.R. Tolkien",
@@ -19,7 +19,7 @@ class FakeBookRepository : BookRepository {
             print = false,
             comment = null,
             editorComment = "incomprehensible",
-            volume = 3
+            volume = "3"
         ),
         Book(
             3, 3, "The Hitchhiker's Guide to the Galaxy", "John Doe",
@@ -27,7 +27,7 @@ class FakeBookRepository : BookRepository {
             print = true,
             comment = null,
             editorComment = null,
-            volume = 5
+            volume = "5"
         ),
         Book(
             4, 4, "The Adventures of Huckleberry Finn", "Mark Twain",
@@ -35,7 +35,7 @@ class FakeBookRepository : BookRepository {
             print = true,
             comment = null,
             editorComment = null,
-            volume = 6
+            volume = "6"
         ),
         Book(
             5, 5, "The Da Vinci Code", "Dan Brown",
@@ -43,13 +43,13 @@ class FakeBookRepository : BookRepository {
             print = true,
             comment = null,
             editorComment = null,
-            volume = 2
+            volume = "2"
         ),
     )
 
-    override fun allBooks(): List<Book> = books
+    override suspend fun allBooks(): List<Book> = books
 
-    override fun bookByID(id: Long): Book? = books.find {
+    override suspend fun bookByID(id: Long): Book? = books.find {
         it.id == id
     }
 }
