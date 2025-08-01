@@ -1,0 +1,50 @@
+@import dev.obnx.model.Page
+@import dev.obnx.model.Endowment
+@param page: Page
+@param endowments: List<Endowment>
+
+@template.layouts.root(page = page, content = @`
+    <h1>Endowments Data</h1>
+
+    <section class="endowments-table-section">
+        <h2 class="endowments-table-header">Table View</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @for (endowment in endowments)
+                <tr>
+                    <td>${endowment.id}</td>
+                    <td dir="rtl" lang="ar">${endowment.name}</td>
+                </tr>
+            @endfor
+            </tbody>
+        </table>
+
+        <details class="endowment-column-info">
+            <summary>Detailed Column information</summary>
+            <p>More information regarding the data:</p>
+            <ul class="endowment-column-info-list">
+                <li>
+                    <dl>
+                        <dt>ID</dt>
+                        <dd>Database identifier for the endowment, set automatically.</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>Name</dt>
+                        <dd>Name of the endowment as in the source document.</dd>
+                    </dl>
+                </li>
+            </ul>
+        </details>
+
+    </section>
+`)
