@@ -13,13 +13,14 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Number</th>
+                <th>No.</th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Genre</th>
                 <th>Endowment</th>
                 <th>Manuscript</th>
                 <th>Print</th>
-                <th>Volume</th>
+                <th>Vol.</th>
                 <th>Comment</th>
                 <th>Editor Comment</th>
             </tr>

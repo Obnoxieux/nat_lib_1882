@@ -11,7 +11,7 @@
 
         <li>
             <dl>
-                <dt>Number</dt>
+                <dt>No. (Number)</dt>
                 <dd>Number in the source document, starts at <code>1</code> for every genre.</dd>
             </dl>
         </li>
@@ -42,7 +42,7 @@
 
         <li>
             <dl>
-                <dt>Volume</dt>
+                <dt>Vol (Volume)</dt>
                 <dd>Volume number in the source document.</dd>
             </dl>
         </li>

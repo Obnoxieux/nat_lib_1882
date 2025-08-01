@@ -4,23 +4,30 @@
 <tr>
     <td>${book.id}</td>
     <td>${book.number}</td>
-    <td dir="rtl">${book.title}</td>
-    <td dir="rtl">${book.author}</td>
-    <td dir="rtl">ENDOWMENT</td>
+    <td dir="rtl" lang="ar">${book.title}</td>
+    <td dir="rtl" lang="ar">
+        @for (author in book.authors)
+            <span>${author.name}</span>
+        @endfor
+    </td>
+
+    <td dir="rtl" lang="ar">${book.genre.name}</td>
+
+    <td dir="rtl" lang="ar">${book.endowment?.name}</td>
 
     @if(book.manuscript)
-        <td>✅</td>
+        <td class="text-center">✅</td>
     @else
-        <td>❌</td>
+        <td class="text-center">❌</td>
     @endif
 
     @if(book.print)
-        <td>✅</td>
+        <td class="text-center">✅</td>
     @else
-        <td>❌</td>
+        <td class="text-center">❌</td>
     @endif
 
     <td>${book.volume}</td>
-    <td dir="rtl">${book.comment}</td>
+    <td dir="rtl" lang="ar">${book.comment}</td>
     <td>${book.editorComment}</td>
 </tr>
