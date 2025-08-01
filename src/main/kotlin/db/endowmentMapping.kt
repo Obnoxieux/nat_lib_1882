@@ -10,15 +10,13 @@ object EndowmentTable : IntIdTable("endowment") {
     val name = varchar("name", 255)
 }
 
-class EndowmentDAO(id: EntityID<Int>) : IntEntity(
-    id,
-) {
-    companion object : IntEntityClass<EndowmentDAO>(EndowmentTable)
+class EndowmentEntity(id: EntityID<Int>) : IntEntity (id) {
+    companion object : IntEntityClass<EndowmentEntity>(EndowmentTable)
 
     var name by EndowmentTable.name
 }
 
-fun endowmentDAOToModel(dao: EndowmentDAO) = Endowment(
-    dao.id.value.toLong(), 
-    dao.name
+fun endowmentEntityToModel(entity: EndowmentEntity) = Endowment(
+    entity.id.value.toLong(),
+    entity.name
 )

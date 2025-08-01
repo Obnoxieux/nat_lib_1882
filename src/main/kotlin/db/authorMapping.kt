@@ -6,19 +6,17 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
-object AuthorTable : IntIdTable("author") {
-    val name = varchar("name", 255)
+object AuthorTable : IntIdTable(name = "author") {
+    val name = varchar(name = "name", length = 255)
 }
 
-class AuthorDAO(id: EntityID<Int>) : IntEntity(
-    id,
-) {
-    companion object : IntEntityClass<AuthorDAO>(AuthorTable)
+class AuthorEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<AuthorEntity>(AuthorTable)
 
     var name by AuthorTable.name
 }
 
-fun authorDAOToModel(dao: AuthorDAO) = Author(
-    dao.id.value.toLong(),
-    dao.name
+fun authorEntityToModel(entity: AuthorEntity) = Author(
+    id = entity.id.value.toLong(),
+    name = entity.name
 )

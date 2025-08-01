@@ -10,15 +10,13 @@ object GenreTable : IntIdTable("genre") {
     val name = varchar("name", 255)
 }
 
-class GenreDAO(id: EntityID<Int>) : IntEntity(
-    id,
-) {
-    companion object : IntEntityClass<GenreDAO>(GenreTable)
+class GenreEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<GenreEntity>(GenreTable)
 
     var name by GenreTable.name
 }
 
-fun genreDAOToModel(dao: GenreDAO) = Genre(
-    dao.id.value.toLong(), 
-    dao.name
+fun genreEntityToModel(entity: GenreEntity) = Genre(
+    entity.id.value.toLong(),
+    entity.name
 )
