@@ -1,0 +1,8 @@
+/*
+ * Adjustments specifically for RTL languages
+ */
+
+td[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
