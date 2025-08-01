@@ -1,14 +1,11 @@
 package dev.obnx.db
 
 import dev.obnx.model.Book
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.ExperimentalSerializationApi
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IntIdTable
 
 object BookTable : IntIdTable("book") {
     val title = varchar("title", 2048)
@@ -35,9 +32,6 @@ class BookDAO(id: EntityID<Int>) : IntEntity(id) {
     var editorComment by BookTable.editorComment
     var volume by BookTable.volume
 }
-
-suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
-    newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 @OptIn(ExperimentalSerializationApi::class)
 fun bookDAOToModel(dao: BookDAO) = Book(
