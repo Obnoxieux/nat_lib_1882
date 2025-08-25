@@ -1,0 +1,7 @@
+### Project-specific ###
+
+/pg_data/
+/kte/
+.env
+/.kotlin/
+/jte-classes/

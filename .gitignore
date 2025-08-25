@@ -253,11 +253,6 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,intellij,visualstudiocode,kotlin,java
 
-### Project-specific ###
-
+/pg_data/
 /craft/sqldump/
 /craft/research/
-/pg_data/
-/jte-classes/
-/kte/
-.env
