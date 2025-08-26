@@ -5,6 +5,7 @@ import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
 import dev.obnx.resources.Endowments
 import dev.obnx.resources.Genres
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -47,7 +48,10 @@ fun Application.configureSerialization(
             val result = bookRepository.bookByID(book.id)
 
             if (result == null) {
-                call.respond(HttpStatusCode.NotFound)
+                call.respond(
+                    status = HttpStatusCode.NotFound,
+                    message = ErrorResponse(error = "NOT_FOUND", message = "Book with id ${book.id} not found")
+                )
             } else {
                 call.respond(result)
             }
@@ -73,7 +77,10 @@ fun Application.configureSerialization(
             val result = authorRepository.authorByID(author.id)
 
             if (result == null) {
-                call.respond(HttpStatusCode.NotFound)
+                call.respond(
+                    status = HttpStatusCode.NotFound,
+                    message = ErrorResponse(error = "NOT_FOUND", message = "Author with id ${author.id} not found")
+                )
             } else {
                 call.respond(result)
             }

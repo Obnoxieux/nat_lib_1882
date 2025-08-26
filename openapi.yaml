@@ -603,13 +603,9 @@ components:
         message:
           type: string
           description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
       example:
         error: "NOT_FOUND"
         message: "Book with ID 999 not found"
-        details: "The requested resource does not exist in the catalogue"
 
   responses:
     BadRequest:
