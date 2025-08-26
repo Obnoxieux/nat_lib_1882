@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/Obnoxieux/nat_lib_1882/api"
+	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/subosito/gotenv"
 )
@@ -27,7 +28,12 @@ func main() {
 
 	strictHandler := api.NewStrictHandler(server, nil)
 
-	r := http.NewServeMux()
+	r := mux.NewRouter()
+
+	r.Use(
+		api.AddServerHeader(),
+		api.CORSHandler(),
+	)
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -42,10 +48,10 @@ func main() {
 		}
 	})
 
-	api.HandlerFromMux(strictHandler, r)
+	h := api.HandlerFromMux(strictHandler, r)
 
 	s := &http.Server{
-		Handler: r,
+		Handler: h,
 		Addr:    net.JoinHostPort("0.0.0.0", "8090"),
 	}
 	log.Printf("Listening on %s", s.Addr)
