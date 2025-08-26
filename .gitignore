@@ -256,3 +256,4 @@ Temporary Items
 /pg_data/
 /craft/sqldump/
 /craft/research/
+.env
