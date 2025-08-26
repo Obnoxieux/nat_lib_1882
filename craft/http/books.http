@@ -1,4 +1,27 @@
-### GET Books as JSON
+### GET Books as JSON (no filters)
 GET http://localhost:8080/books
 Accept: application/json
-###
+
+### GET Books as JSON (just 10 results)
+GET http://localhost:8080/books?limit=10
+Accept: application/json
+
+### GET Books as JSON (second batch)
+GET http://localhost:8080/books?offset=100
+Accept: application/json
+
+### GET Books by author with search
+GET http://localhost:8080/books?search=ابو عمرو الداني
+Accept: application/json
+
+### GET Books as JSON (only Uthman al-Kurdi)
+GET http://localhost:8080/books?endowment=20
+Accept: application/json
+
+### GET Books as JSON (only Uthman al-Kurdi from genre tafsir)
+GET http://localhost:8080/books?endowment=20&genre=3
+Accept: application/json
+
+### GET Books with Bad request
+GET http://localhost:8080/books?endowment=möp
+Accept: application/json

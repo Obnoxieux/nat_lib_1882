@@ -27,7 +27,7 @@ fun Application.configureSerialization(
 
     routing {
         get<Books> { book ->
-            val books = bookRepository.allBooks()
+            val books = bookRepository.findFilteredBooks(filter = book)
 
             val acceptHeader = call.request.headers["Accept"]
 
