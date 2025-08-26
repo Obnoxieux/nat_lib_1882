@@ -46,6 +46,13 @@ paths:
           description: Filter by print status
           schema:
             type: boolean
+        - name: search
+          in: query
+          description: Generic free-text search term to filter books
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
         - name: limit
           in: query
           description: Maximum number of results to return
@@ -121,6 +128,13 @@ paths:
       tags:
         - authors
       parameters:
+        - name: search
+          in: query
+          description: Generic free-text search term to filter authors. The only supported field that is searched is the author's name for now.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
         - name: limit
           in: query
           description: Maximum number of results to return
