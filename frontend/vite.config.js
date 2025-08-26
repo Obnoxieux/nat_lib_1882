@@ -9,7 +9,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
-                test: resolve(__dirname, 'test/index.html'),
+                openapi: resolve(__dirname, 'openapi/index.html'),
                 third: resolve(__dirname, 'third.html'),
             },
         },
