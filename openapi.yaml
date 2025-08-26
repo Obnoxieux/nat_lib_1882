@@ -4,7 +4,7 @@ info:
   description: |
     REST API for accessing historical Damascus National Library catalogue data from its inception in 1882.
     This API provides read-only access to books, authors, genres, and endowments 
-    from the original documentary source. Only author information can be updated.
+    from the original documentary source.
   version: 1.0.0
   contact:
     name: Library Catalogue API
@@ -181,40 +181,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-
-    patch:
-      summary: Update an author
-      description: Update author information (only endpoint that allows modifications)
-      operationId: updateAuthor
-      tags:
-        - authors
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Author ID
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthorUpdate'
-      responses:
-        '200':
-          description: Author updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
-        '400':
-          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
