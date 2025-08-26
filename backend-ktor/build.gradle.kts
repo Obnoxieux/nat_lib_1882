@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.gg.kte)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.ktor.server.default.headers)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
