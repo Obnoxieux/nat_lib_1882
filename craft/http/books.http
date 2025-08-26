@@ -2,6 +2,12 @@
 GET http://localhost:8080/books
 Accept: application/json
 
+### GET Single Book
+GET http://localhost:8080/books/42
+
+### GET nonexistent Book
+GET http://localhost:8080/books/425346456456345
+
 ### GET Books as JSON (just 10 results)
 GET http://localhost:8080/books?limit=10
 Accept: application/json

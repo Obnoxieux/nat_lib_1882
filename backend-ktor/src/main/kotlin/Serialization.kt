@@ -5,6 +5,7 @@ import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
 import dev.obnx.resources.Endowments
 import dev.obnx.resources.Genres
+import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.jte.*
@@ -42,6 +43,16 @@ fun Application.configureSerialization(
             }
         }
 
+        get<Books.Id> { book ->
+            val result = bookRepository.bookByID(book.id)
+
+            if (result == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                call.respond(result)
+            }
+        }
+
         get<Authors> { _ ->
             val authors = authorRepository.allAuthors()
 
@@ -55,6 +66,16 @@ fun Application.configureSerialization(
                     description = "Browse all authors in the Damascus Public Library catalogue"
                 )
                 call.respond(JteContent("authors.kte", mapOf("authors" to authors, "page" to page)))
+            }
+        }
+
+        get<Authors.Id> { author ->
+            val result = authorRepository.authorByID(author.id)
+
+            if (result == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                call.respond(result)
             }
         }
 

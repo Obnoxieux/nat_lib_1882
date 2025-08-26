@@ -8,4 +8,14 @@ class PostgresAuthorRepository : AuthorRepository {
     override suspend fun allAuthors(): List<Author> = suspendTransaction {
         AuthorEntity.all().map(transform = ::authorEntityToModel)
     }
+
+    override suspend fun authorByID(id: Long): Author? = suspendTransaction {
+        val entity = AuthorEntity.findById(id.toInt())
+
+        if (entity != null) {
+            return@suspendTransaction authorEntityToModel(entity)
+        } else {
+            return@suspendTransaction null
+        }
+    }
 }

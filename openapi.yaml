@@ -555,16 +555,6 @@ components:
         id: 1
         name: "الأصفهاني، أبو الفرج"
 
-    AuthorUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 255
-          description: Author's name
-      example:
-        name: "الأصفهاني، أبو الفرج علي بن الحسين"
-
     Genre:
       type: object
       required:
