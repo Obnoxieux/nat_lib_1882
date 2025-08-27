@@ -1,9 +1,0 @@
-<nav class="main-nav">
-    <ul class="nav-list">
-        <li class="nav-link"><a href="/" title="Go to home page">Home</a></li>
-        <li class="nav-link"><a href="/books" title="Browse library catalogue page">Catalogue</a></li>
-        <li class="nav-link"><a href="/authors" title="Browse all authors in the dataset">Authors</a></li>
-        <li class="nav-link"><a href="/genres" title="Browse all genres in the dataset">Genres</a></li>
-        <li class="nav-link"><a href="/endowments" title="Browse all endowments in the dataset">Endowments</a></li>
-    </ul>
-</nav>

@@ -1,18 +1,21 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vite + Lit + TS</title>
+    <head>
+        <title>Home Page</title>
+        {{> head }}
+    </head>
+    <body>
+        {{> nav }}
 
-  <script type="module" src="/src/components/layouts/app-layout.ts"></script>
-  <link rel="stylesheet" href="/src/styles/index.css">
-</head>
-<body>
-<app-layout>
-  <!-- Your page content lives here -->
-  <p>Home page</p>
-</app-layout>
-</body>
+        <main>
+            <h1>Damascus Public Library Catalogue</h1>
+            <p>
+                This project provides a searchable database and REST API with
+                the historical catalogue data for the Damascus Public Library
+                after its founding in 1882.
+            </p>
+        </main>
+
+        {{> footer }}
+    </body>
 </html>
