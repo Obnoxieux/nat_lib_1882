@@ -26,15 +26,17 @@
 .book-form {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0;
     margin-bottom: 2.5rem;
 
     @media (min-width: 768px) {
         grid-template-columns: 1fr 1fr;
+        gap: 1rem;
     }
 
     @media (min-width: 1024px) {
         grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.25rem;
     }
 
     input, select {
