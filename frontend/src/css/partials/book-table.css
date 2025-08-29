@@ -18,7 +18,26 @@
 }
 
 .books-table-section {
-   .books-table-header {
-       margin-bottom: 1.5rem;
-   }
+    .books-table-header {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.book-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    input, select {
+        margin-bottom: 0;
+    }
 }

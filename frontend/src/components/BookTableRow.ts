@@ -13,31 +13,34 @@ export class BookTableRow extends LitElement {
           text-align: center;
       }
   `;
-
   @property({type: Object})
   book!: Book;
 
   render() {
-    const b = this.book ?? ({} as Book);
-    const authors = b.authors ?? [];
+    const book = this.book;
+    const authors = book.authors ?? [];
 
     return html`
       <tr>
-        <td>${b.id ?? ''}</td>
-        <td>${b.number ?? ''}</td>
-        <td dir="rtl" lang="ar">${b.title ?? ''}</td>
+        <td>${book.id ?? ''}</td>
+        <td>${book.number ?? ''}</td>
+        <td dir="rtl" lang="ar">${book.title ?? ''}</td>
         <td dir="rtl" lang="ar">
           ${authors.map(a => html`<span>${a.name}</span>`)}
         </td>
-        <td dir="rtl" lang="ar">${b.genre?.name ?? ''}</td>
-        <td dir="rtl" lang="ar">${b.endowment?.name ?? ''}</td>
-        <td class="text-center">${b.manuscript ? '✅' : '❌'}</td>
-        <td class="text-center">${b.print ? '✅' : '❌'}</td>
-        <td>${b.volume ?? ''}</td>
-        <td dir="rtl" lang="ar">${b.comment ?? ''}</td>
-        <td>${b.editorComment ?? ''}</td>
+        <td dir="rtl" lang="ar">${book.genre?.name ?? ''}</td>
+        <td dir="rtl" lang="ar">${book.endowment?.name ?? ''}</td>
+        <td class="text-center">${book.manuscript ? '✅' : '❌'}</td>
+        <td class="text-center">${book.print ? '✅' : '❌'}</td>
+        <td>${book.volume ?? ''}</td>
+        <td dir="rtl" lang="ar">${book.comment ?? ''}</td>
+        <td>${book.editorComment ?? ''}</td>
       </tr>
     `;
+  }
+
+  protected createRenderRoot() {
+    return this;
   }
 }
 

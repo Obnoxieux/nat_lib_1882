@@ -8,3 +8,5 @@
 
 @import "theme/colors.css";
 @import "theme/typography.css";
+
+@import "utils/a11y.css";

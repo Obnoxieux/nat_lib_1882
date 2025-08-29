@@ -1,0 +1,135 @@
+import {customElement, property} from "lit/decorators.js";
+import {html, LitElement} from "lit";
+// @ts-ignore
+import {BookTableRow} from "./BookTableRow.ts";
+import type {Book} from "../types/Book.ts";
+import {Task} from "@lit/task";
+
+@customElement("book-datatable")
+export class BookDatatable extends LitElement {
+  @property({type: Boolean})
+  manuscript = true;
+
+  @property({type: Boolean})
+  print = true;
+
+  @property({type: Number})
+  author = 0;
+
+  @property({type: Number})
+  genre = 0;
+
+  @property({type: Number})
+  endowment = 0;
+
+  private _bookTask = new Task(this, {
+    task: async ([], {signal}) => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/books`, {signal});
+      if (!response.ok) {
+        throw new Error(String(response.status));
+      }
+
+      return await response.json() as Book[];
+    },
+    args: () => []
+  });
+
+  render() {
+    return html`
+
+      <h3>Filter/Search</h3>
+
+      <form class="book-form">
+        <label>
+          Author
+          <input type="text" placeholder="Author name...">
+        </label>
+
+        <label>
+          Genre
+          <select id="select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </label>
+
+        <label>
+          Endowment
+          <select id="select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </label>
+
+        <label for="book-search-input">
+          Search:
+          <input id="book-search-input" placeholder="Search..." type="search">
+        </label>
+      </form>
+
+      <h3>Results</h3>
+
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>No.</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Endowment</th>
+          <th>Manuscript</th>
+          <th>Print</th>
+          <th>Vol.</th>
+          <th>Comment</th>
+          <th>Editor Comment</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        ${this._bookTask.render({
+          pending: () => html`
+            <tr>
+              <td colspan="11">
+                <progress></progress>
+              </td>
+            </tr>
+          `,
+          error: (e) => html`
+            <tr>
+              <td colspan="11">Failed to load books: ${String(e)}</td>
+            </tr>
+          `,
+          complete: (books: Book[]) => html`
+            ${books.map((book) => html`
+                      <tr>
+                        <td>${book.id ?? ''}</td>
+                        <td>${book.number ?? ''}</td>
+                        <td dir="rtl" lang="ar">${book.title ?? ''}</td>
+                        <td dir="rtl" lang="ar">
+                          ${book.authors?.map(a => html`<span>${a.name}</span>`)}
+                        </td>
+                        <td dir="rtl" lang="ar">${book.genre?.name ?? ''}</td>
+                        <td dir="rtl" lang="ar">${book.endowment?.name ?? ''}</td>
+                        <td class="text-center">${book.manuscript ? '✅' : '❌'}</td>
+                        <td class="text-center">${book.print ? '✅' : '❌'}</td>
+                        <td>${book.volume ?? ''}</td>
+                        <td dir="rtl" lang="ar">${book.comment ?? ''}</td>
+                        <td>${book.editorComment ?? ''}</td>
+                      </tr>
+                    `
+            )}
+          `
+        })}
+
+        </tbody>
+      </table>
+    `;
+  }
+
+  protected createRenderRoot() {
+    return this;
+  }
+}
