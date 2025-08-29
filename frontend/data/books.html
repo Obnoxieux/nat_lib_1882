@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Catalogue</title>
+  <meta content="Browse full 1882 catalogue of books in the Damascus Public Library" name="description">
+  {{> head }}
+</head>
+<body>
+{{> nav }}
+
+<main>
+  <h1>Catalogue Data</h1>
+
+  <section class="books-table-section">
+    <h2 class="books-table-header">Table View</h2>
+
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>No.</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Endowment</th>
+        <th>Manuscript</th>
+        <th>Print</th>
+        <th>Vol.</th>
+        <th>Comment</th>
+        <th>Editor Comment</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      @for (book in books)
+      @template.blocks.book.bookTableRow(book = book)
+      @endfor
+      </tbody>
+    </table>
+
+    @template.blocks.book.bookInfoSection()
+
+  </section>
+</main>
+
+{{> footer }}
+</body>
+</html>

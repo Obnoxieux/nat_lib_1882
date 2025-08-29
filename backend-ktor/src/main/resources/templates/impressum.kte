@@ -1,7 +1,0 @@
-@import dev.obnx.model.Page
-@param page: Page
-
-@template.layouts.root(page = page, content = @`
-    <h1>Impressum</h1>
-    <p>Legal stuff here.</p>
-`)

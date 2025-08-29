@@ -21,26 +21,10 @@ fun Application.configureRouting() {
 
         get("/") {
             val page = Page(
-                title = "Damascus National Library 1882 Catalogue",
-                description = "Searchable database and REST API with historical catalogue data"
+                title = "Ktor API Backend",
+                description = "Searchable database and REST API with historical catalogue data - backend"
             )
             call.respond(JteContent("index.kte", mapOf("page" to page)))
-        }
-
-        get("/impressum") {
-            val page = Page(
-                title = "Impressum",
-                description = "legal notice according to German law"
-            )
-            call.respond(JteContent("impressum.kte", mapOf("page" to page)))
-        }
-
-        get("/privacy") {
-            val page = Page(
-                title = "Datenschutzerklärung",
-                description = "GDPR privacy statement"
-            )
-            call.respond(JteContent("privacy.kte", mapOf("page" to page)))
         }
     }
 }

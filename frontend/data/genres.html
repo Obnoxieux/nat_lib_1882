@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Genres</title>
+  <meta content="Browse all genres in the Damascus Public Library catalogue" name="description">
+  {{> head }}
+</head>
+<body>
+{{> nav }}
+
+<main>
+  <h1>Genres Data</h1>
+
+  <section class="genres-table-section">
+    <h2 class="genres-table-header">Table View</h2>
+
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      @for (genre in genres)
+      <tr>
+        <td>${genre.id}</td>
+        <td dir="rtl" lang="ar">${genre.name}</td>
+      </tr>
+      @endfor
+      </tbody>
+    </table>
+
+    <details class="genre-column-info">
+      <summary>Detailed Column information</summary>
+      <p>More information regarding the data:</p>
+      <ul class="genre-column-info-list">
+        <li>
+          <dl>
+            <dt>ID</dt>
+            <dd>Database identifier for the genre, set automatically.</dd>
+          </dl>
+        </li>
+        <li>
+          <dl>
+            <dt>Name</dt>
+            <dd>Name of the genre as in the source document.</dd>
+          </dl>
+        </li>
+      </ul>
+    </details>
+
+  </section>
+</main>
+
+{{> footer }}
+</body>
+</html>
