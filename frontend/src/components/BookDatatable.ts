@@ -4,6 +4,8 @@ import {html, LitElement} from "lit";
 import {BookTableRow} from "./BookTableRow.ts";
 import type {Book} from "../types/Book.ts";
 import {Task} from "@lit/task";
+import type {Genre} from "../types/Genre.ts";
+import type {Endowment} from "../types/Endowment.ts";
 
 @customElement("book-datatable")
 export class BookDatatable extends LitElement {
@@ -34,6 +36,30 @@ export class BookDatatable extends LitElement {
     args: () => []
   });
 
+  private _genreTask = new Task(this, {
+    task: async ([], {signal}) => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/genres`, {signal});
+      if (!response.ok) {
+        throw new Error(String(response.status));
+      }
+
+      return await response.json() as Genre[];
+    },
+    args: () => []
+  });
+
+  private _endowmentTask = new Task(this, {
+    task: async ([], {signal}) => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/endowments`, {signal});
+      if (!response.ok) {
+        throw new Error(String(response.status));
+      }
+
+      return await response.json() as Endowment[];
+    },
+    args: () => []
+  });
+
   render() {
     return html`
 
@@ -47,19 +73,35 @@ export class BookDatatable extends LitElement {
 
         <label>
           Genre
-          <select id="select">
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
+          <select id="select" dir="rtl">
+            <option value="0">All Genres</option>
+            ${this._genreTask.render({
+              pending: () => '',
+              error: (_) => '',
+              complete: (genres: Genre[]) => html`
+                ${genres.map((genre) => html`
+                  <option value="${genre.id}">${genre.name}</option>
+                `)}
+              `
+            })}
+
           </select>
         </label>
 
         <label>
           Endowment
-          <select id="select">
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
+          <select id="select" dir="rtl">
+            <option value="0">All Endowments</option>
+
+            ${this._endowmentTask.render({
+              pending: () => '',
+              error: (_) => '',
+              complete: (endowments: Endowment[]) => html`
+                ${endowments.map((endowment) => html`
+                  <option value="${endowment.id}">${endowment.name}</option>
+                `)}
+              `
+            })}
           </select>
         </label>
 
