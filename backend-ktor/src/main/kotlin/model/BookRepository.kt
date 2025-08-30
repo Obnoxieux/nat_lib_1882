@@ -2,6 +2,8 @@ package dev.obnx.model
 
 import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
+import dev.obnx.resources.Endowments
+import dev.obnx.resources.Genres
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
@@ -10,4 +12,6 @@ interface BookRepository : BaseRepository {
     suspend fun findFilteredBooks(filter: Books): List<Book>
     suspend fun bookByID(id: Long): Book?
     suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book>
+    suspend fun booksByGenreID(filter: Genres.Id.GenreBooks): List<Book>
+    suspend fun booksByEndowmentID(filter: Endowments.Id.EndowmentBooks): List<Book>
 }

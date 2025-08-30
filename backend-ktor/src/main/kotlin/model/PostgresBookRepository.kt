@@ -3,6 +3,8 @@ package dev.obnx.model
 import dev.obnx.db.*
 import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
+import dev.obnx.resources.Endowments
+import dev.obnx.resources.Genres
 import kotlinx.serialization.ExperimentalSerializationApi
 import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.andWhere
@@ -60,17 +62,56 @@ class PostgresBookRepository : BookRepository {
         }
     }
 
-    override suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book> = suspendTransaction {
-        val query = getBookBaseQuery()
-        query.andWhere {
-            BookAuthorTable.author eq filter.id.toInt()
+    private suspend inline fun <reified T> getBooksByID(id: Int, limit: Int?, offset: Long?): List<Book> =
+        suspendTransaction {
+            val query = getBookBaseQuery()
+
+            when (T::class) {
+                Authors.Id.AuthorBooks::class ->
+                    query.andWhere {
+                        BookAuthorTable.author eq id
+                    }
+
+                Genres.Id.GenreBooks::class ->
+                    query.andWhere {
+                        BookTable.genre eq id
+                    }
+
+                Endowments.Id.EndowmentBooks::class ->
+                    query.andWhere {
+                        BookTable.endowment eq id
+                    }
+            }
+
+            query.limit(count = limit ?: BaseRepository.DEFAULT_LIMIT)
+            query.offset(start = offset ?: 0)
+
+            val books = BookEntity.wrapRows(query).map(::bookEntityToModel)
+            return@suspendTransaction books
         }
 
-        query.limit(count = filter.limit?.toInt() ?: BaseRepository.DEFAULT_LIMIT)
-        query.offset(start = filter.offset ?: 0)
+    override suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book> {
+        return getBooksByID<Authors.Id.AuthorBooks>(
+            id = filter.id.toInt(),
+            limit = filter.limit?.toInt(),
+            offset = filter.offset
+        )
+    }
 
-        val books = BookEntity.wrapRows(query).map(::bookEntityToModel)
-        return@suspendTransaction books
+    override suspend fun booksByGenreID(filter: Genres.Id.GenreBooks): List<Book> {
+        return getBooksByID<Genres.Id.GenreBooks>(
+            id = filter.id.toInt(),
+            limit = filter.limit?.toInt(),
+            offset = filter.offset
+        )
+    }
+
+    override suspend fun booksByEndowmentID(filter: Endowments.Id.EndowmentBooks): List<Book> {
+        return getBooksByID<Endowments.Id.EndowmentBooks>(
+            id = filter.id.toInt(),
+            limit = filter.limit?.toInt(),
+            offset = filter.offset
+        )
     }
 
     private fun getBookBaseQuery(): Query {

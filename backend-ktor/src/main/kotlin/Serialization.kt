@@ -93,11 +93,57 @@ fun Application.configureSerialization(
             call.respond(genres)
         }
 
+        get<Genres.Id> { genre ->
+            val result = genreRepository.genreByID(genre.id)
+            if (result == null) {
+                call.respond(
+                    status = HttpStatusCode.NotFound,
+                    message = ErrorResponse(error = "NOT_FOUND", message = "Genre with id ${genre.id} not found")
+                )
+            } else {
+                call.respond(result)
+            }
+        }
+
+        get<Genres.Id.GenreBooks> { query ->
+            val books = bookRepository.booksByGenreID(query)
+            call.respond(
+                PaginatedResponse(
+                    items = books,
+                    total = books.size.toLong(),
+                    limit = query.limit ?: BaseRepository.DEFAULT_LIMIT.toLong(),
+                    offset = query.offset ?: BaseRepository.DEFAULT_OFFSET.toLong()
+                )
+            )
+        }
+
         get<Endowments> { _ ->
             val endowments = endowmentRepository.allEndowments()
             call.respond(endowments)
         }
 
-        // TODO: endpoints by ID and booksBy
+        get<Endowments.Id> { endowment ->
+            val result = endowmentRepository.endowmentByID(endowment.id)
+            if (result == null) {
+                call.respond(
+                    status = HttpStatusCode.NotFound,
+                    message = ErrorResponse(error = "NOT_FOUND", message = "Endowment with id ${endowment.id} not found")
+                )
+            } else {
+                call.respond(result)
+            }
+        }
+
+        get<Endowments.Id.EndowmentBooks> { query ->
+            val books = bookRepository.booksByEndowmentID(query)
+            call.respond(
+                PaginatedResponse(
+                    items = books,
+                    total = books.size.toLong(),
+                    limit = query.limit ?: BaseRepository.DEFAULT_LIMIT.toLong(),
+                    offset = query.offset ?: BaseRepository.DEFAULT_OFFSET.toLong()
+                )
+            )
+        }
     }
 }
