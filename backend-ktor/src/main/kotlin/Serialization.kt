@@ -51,6 +51,18 @@ fun Application.configureSerialization(
             }
         }
 
+        get<Authors.Id.AuthorBooks> { query ->
+            val books = bookRepository.booksByAuthorID(query)
+            call.respond(
+                PaginatedResponse(
+                    items = books,
+                    total = books.size.toLong(),
+                    limit = query.limit ?: BaseRepository.DEFAULT_LIMIT.toLong(),
+                    offset = query.offset ?: BaseRepository.DEFAULT_OFFSET.toLong()
+                )
+            )
+        }
+
         get<Authors> { author ->
             val authors = authorRepository.allAuthors()
             call.respond(
@@ -85,5 +97,7 @@ fun Application.configureSerialization(
             val endowments = endowmentRepository.allEndowments()
             call.respond(endowments)
         }
+
+        // TODO: endpoints by ID and booksBy
     }
 }

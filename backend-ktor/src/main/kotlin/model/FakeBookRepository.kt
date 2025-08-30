@@ -1,5 +1,6 @@
 package dev.obnx.model
 
+import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -67,5 +68,9 @@ class FakeBookRepository : BookRepository {
 
     override suspend fun bookByID(id: Long): Book? = books.find {
         it.id == id
+    }
+
+    override suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book> {
+        return books.filter { book -> book.authors.any { it.id == filter.id } }
     }
 }

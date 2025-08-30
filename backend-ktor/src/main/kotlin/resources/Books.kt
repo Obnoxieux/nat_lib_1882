@@ -1,6 +1,6 @@
 package dev.obnx.resources
 
-import io.ktor.resources.Resource
+import io.ktor.resources.*
 
 @Resource("/books")
 class Books(

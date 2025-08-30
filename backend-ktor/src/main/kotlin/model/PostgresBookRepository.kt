@@ -1,8 +1,10 @@
 package dev.obnx.model
 
 import dev.obnx.db.*
+import dev.obnx.resources.Authors
 import dev.obnx.resources.Books
 import kotlinx.serialization.ExperimentalSerializationApi
+import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.or
 
@@ -13,8 +15,7 @@ class PostgresBookRepository : BookRepository {
     }
 
     override suspend fun findFilteredBooks(filter: Books): List<Book> = suspendTransaction {
-        val query = BookTable.innerJoin(BookAuthorTable).innerJoin(AuthorTable)
-            .select(AuthorTable.columns + BookTable.columns)
+        val query = getBookBaseQuery()
 
         filter.genre?.let {
             query.andWhere { BookTable.genre eq filter.genre.toInt() }
@@ -57,5 +58,23 @@ class PostgresBookRepository : BookRepository {
         } else {
             return@suspendTransaction null
         }
+    }
+
+    override suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book> = suspendTransaction {
+        val query = getBookBaseQuery()
+        query.andWhere {
+            BookAuthorTable.author eq filter.id.toInt()
+        }
+
+        query.limit(count = filter.limit?.toInt() ?: BaseRepository.DEFAULT_LIMIT)
+        query.offset(start = filter.offset ?: 0)
+
+        val books = BookEntity.wrapRows(query).map(::bookEntityToModel)
+        return@suspendTransaction books
+    }
+
+    private fun getBookBaseQuery(): Query {
+        return BookTable.innerJoin(BookAuthorTable).innerJoin(AuthorTable)
+            .select(AuthorTable.columns + BookTable.columns)
     }
 }
