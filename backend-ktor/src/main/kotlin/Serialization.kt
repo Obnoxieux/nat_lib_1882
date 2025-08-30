@@ -28,7 +28,14 @@ fun Application.configureSerialization(
     routing {
         get<Books> { book ->
             val books = bookRepository.findFilteredBooks(filter = book)
-            call.respond(books)
+            call.respond(
+                PaginatedResponse(
+                    items = books,
+                    total = books.size.toLong(),
+                    limit = book.limit ?: BaseRepository.DEFAULT_LIMIT.toLong(),
+                    offset = book.offset ?: BaseRepository.DEFAULT_OFFSET.toLong(),
+                )
+            )
         }
 
         get<Books.Id> { book ->
@@ -44,9 +51,16 @@ fun Application.configureSerialization(
             }
         }
 
-        get<Authors> { _ ->
+        get<Authors> { author ->
             val authors = authorRepository.allAuthors()
-            call.respond(authors)
+            call.respond(
+                PaginatedResponse(
+                    items = authors,
+                    total = authors.size.toLong(),
+                    limit = author.limit ?: BaseRepository.DEFAULT_LIMIT.toLong(),
+                    offset = author.offset ?: BaseRepository.DEFAULT_OFFSET.toLong()
+                )
+            )
         }
 
         get<Authors.Id> { author ->

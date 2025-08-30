@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 data class Endowment(
     val id: Long,
     val name: String
-)
+) : DomainModel()

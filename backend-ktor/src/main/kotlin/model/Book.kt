@@ -19,4 +19,4 @@ data class Book(
     @SerialName("editor_comment")
     val editorComment: String?,
     val volume: String?
-)
+) : DomainModel()

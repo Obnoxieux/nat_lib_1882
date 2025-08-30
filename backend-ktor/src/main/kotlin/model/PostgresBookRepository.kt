@@ -42,7 +42,7 @@ class PostgresBookRepository : BookRepository {
             }
         }
 
-        query.limit(count = filter.limit?.toInt() ?: BookRepository.DEFAULT_LIMIT)
+        query.limit(count = filter.limit?.toInt() ?: BaseRepository.DEFAULT_LIMIT)
         query.offset(start = filter.offset ?: 0)
 
         val books = BookEntity.wrapRows(query).map(::bookEntityToModel)

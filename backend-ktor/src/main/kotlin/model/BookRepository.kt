@@ -4,12 +4,8 @@ import dev.obnx.resources.Books
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
-interface BookRepository {
+interface BookRepository : BaseRepository {
     suspend fun allBooks(): List<Book>
     suspend fun findFilteredBooks(filter: Books): List<Book>
     suspend fun bookByID(id: Long): Book?
-
-    companion object {
-        const val DEFAULT_LIMIT = 100
-    }
 }
