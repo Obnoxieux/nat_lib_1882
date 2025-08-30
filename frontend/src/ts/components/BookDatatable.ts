@@ -6,6 +6,7 @@ import type {Book} from "../types/Book.ts";
 import {Task} from "@lit/task";
 import type {Genre} from "../types/Genre.ts";
 import type {Endowment} from "../types/Endowment.ts";
+import {live} from "lit/directives/live.js";
 
 @customElement("book-datatable")
 export class BookDatatable extends LitElement {
@@ -24,19 +25,22 @@ export class BookDatatable extends LitElement {
   @property({type: Number})
   endowment = 0;
 
+  @property({type: Number})
+  itemsPerPage = 10;
+
   @state()
   showFilter = true;
 
   private _bookTask = new Task(this, {
-    task: async ([], {signal}) => {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/books`, {signal});
+    task: async ([author], {signal}) => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/books?author=${author}`, {signal});
       if (!response.ok) {
         throw new Error(String(response.status));
       }
 
       return await response.json() as Book[];
     },
-    args: () => []
+    args: () => [this.author]
   });
 
   private _genreTask = new Task(this, {
@@ -141,7 +145,8 @@ export class BookDatatable extends LitElement {
         <form class="book-form">
           <label>
             Author
-            <input type="text" placeholder="Author name...">
+            <input type="text" placeholder="Author name..." .value=${live(this.author)}
+                   @change=${this.handleAuthorChange}>
           </label>
 
           <label>
@@ -181,18 +186,18 @@ export class BookDatatable extends LitElement {
           <div class="checkbox-container">
             <label>
               Manuscript
-              <input type="checkbox" checked>
+              <input type="checkbox" ?checked=${this.manuscript}>
             </label>
             <label>
               Print
-              <input type="checkbox" checked>
+              <input type="checkbox" ?checked=${this.print}>
             </label>
           </div>
 
           <div class="pagination-container">
             <label>
               Items per page:
-              <select>
+              <select .value=${this.itemsPerPage}>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="50">50</option>
@@ -210,6 +215,11 @@ export class BookDatatable extends LitElement {
     } else {
       return html``;
     }
+  }
+
+  protected handleAuthorChange(e: InputEvent) {
+    // @ts-expect-error
+    this.author = e.target?.value;
   }
 
   protected createRenderRoot() {
