@@ -1,7 +1,5 @@
 import {customElement, property, state} from "lit/decorators.js";
 import {html, LitElement} from "lit";
-// @ts-ignore
-import {BookTableRow} from "./BookTableRow.ts";
 import type {Book} from "../types/Book.ts";
 import {Task} from "@lit/task";
 import type {Genre} from "../types/Genre.ts";
