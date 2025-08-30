@@ -1,4 +1,4 @@
-import {customElement, property} from "lit/decorators.js";
+import {customElement, property, state} from "lit/decorators.js";
 import {html, LitElement} from "lit";
 // @ts-ignore
 import {BookTableRow} from "./BookTableRow.ts";
@@ -23,6 +23,9 @@ export class BookDatatable extends LitElement {
 
   @property({type: Number})
   endowment = 0;
+
+  @state()
+  showFilter = true;
 
   private _bookTask = new Task(this, {
     task: async ([], {signal}) => {
@@ -63,53 +66,14 @@ export class BookDatatable extends LitElement {
   render() {
     return html`
 
-      <h3>Filter/Search</h3>
+      <div class="form-header">
+        <h3>Filter/Search</h3>
+        <button @click=${() => this.showFilter = !this.showFilter}>
+          ${this.showFilter ? 'Hide' : 'Show'}
+        </button>
+      </div>
 
-      <form class="book-form">
-        <label>
-          Author
-          <input type="text" placeholder="Author name...">
-        </label>
-
-        <label>
-          Genre
-          <select id="select" dir="rtl">
-            <option value="0">All Genres</option>
-            ${this._genreTask.render({
-              pending: () => '',
-              error: (_) => '',
-              complete: (genres: Genre[]) => html`
-                ${genres.map((genre) => html`
-                  <option value="${genre.id}">${genre.name}</option>
-                `)}
-              `
-            })}
-
-          </select>
-        </label>
-
-        <label>
-          Endowment
-          <select id="select" dir="rtl">
-            <option value="0">All Endowments</option>
-
-            ${this._endowmentTask.render({
-              pending: () => '',
-              error: (_) => '',
-              complete: (endowments: Endowment[]) => html`
-                ${endowments.map((endowment) => html`
-                  <option value="${endowment.id}">${endowment.name}</option>
-                `)}
-              `
-            })}
-          </select>
-        </label>
-
-        <label for="book-search-input">
-          Search:
-          <input id="book-search-input" placeholder="Search..." type="search">
-        </label>
-      </form>
+      ${this.getForm()}
 
       <h3>Results</h3>
 
@@ -169,6 +133,83 @@ export class BookDatatable extends LitElement {
         </tbody>
       </table>
     `;
+  }
+
+  protected getForm() {
+    if (this.showFilter) {
+      return html`
+        <form class="book-form">
+          <label>
+            Author
+            <input type="text" placeholder="Author name...">
+          </label>
+
+          <label>
+            Genre
+            <select id="select" dir="rtl">
+              <option value="0">All Genres</option>
+              ${this._genreTask.render({
+                pending: () => '',
+                error: (_) => '',
+                complete: (genres: Genre[]) => html`
+                  ${genres.map((genre) => html`
+                    <option value="${genre.id}">${genre.name}</option>
+                  `)}
+                `
+              })}
+
+            </select>
+          </label>
+
+          <label>
+            Endowment
+            <select id="select" dir="rtl">
+              <option value="0">All Endowments</option>
+
+              ${this._endowmentTask.render({
+                pending: () => '',
+                error: (_) => '',
+                complete: (endowments: Endowment[]) => html`
+                  ${endowments.map((endowment) => html`
+                    <option value="${endowment.id}">${endowment.name}</option>
+                  `)}
+                `
+              })}
+            </select>
+          </label>
+
+          <div class="checkbox-container">
+            <label>
+              Manuscript
+              <input type="checkbox" checked>
+            </label>
+            <label>
+              Print
+              <input type="checkbox" checked>
+            </label>
+          </div>
+
+          <div class="pagination-container">
+            <label>
+              Items per page:
+              <select>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+
+          <label for="book-search-input">
+            Search:
+            <input id="book-search-input" placeholder="Search..." type="search">
+          </label>
+        </form>
+      `;
+    } else {
+      return html``;
+    }
   }
 
   protected createRenderRoot() {

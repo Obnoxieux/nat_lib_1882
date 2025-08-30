@@ -21,6 +21,12 @@
     .books-table-header {
         margin-bottom: 1.5rem;
     }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 .book-form {
@@ -41,5 +47,24 @@
 
     input, select {
         margin-bottom: 0;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        gap: 0.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-md);
+
+        box-shadow: var(--shadow-sm);
+
+        label {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.5rem;
+            margin-bottom: 0;
+        }
     }
 }
