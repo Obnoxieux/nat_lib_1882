@@ -62,7 +62,7 @@ class PostgresBookRepository : BookRepository {
         }
     }
 
-    private suspend inline fun <reified T> getBooksByID(id: Int, limit: Int?, offset: Long?): List<Book> =
+    private suspend inline fun <reified T> getBooksByForeignID(id: Int, limit: Int?, offset: Long?): List<Book> =
         suspendTransaction {
             val query = getBookBaseQuery()
 
@@ -91,7 +91,7 @@ class PostgresBookRepository : BookRepository {
         }
 
     override suspend fun booksByAuthorID(filter: Authors.Id.AuthorBooks): List<Book> {
-        return getBooksByID<Authors.Id.AuthorBooks>(
+        return getBooksByForeignID<Authors.Id.AuthorBooks>(
             id = filter.id.toInt(),
             limit = filter.limit?.toInt(),
             offset = filter.offset
@@ -99,7 +99,7 @@ class PostgresBookRepository : BookRepository {
     }
 
     override suspend fun booksByGenreID(filter: Genres.Id.GenreBooks): List<Book> {
-        return getBooksByID<Genres.Id.GenreBooks>(
+        return getBooksByForeignID<Genres.Id.GenreBooks>(
             id = filter.id.toInt(),
             limit = filter.limit?.toInt(),
             offset = filter.offset
@@ -107,7 +107,7 @@ class PostgresBookRepository : BookRepository {
     }
 
     override suspend fun booksByEndowmentID(filter: Endowments.Id.EndowmentBooks): List<Book> {
-        return getBooksByID<Endowments.Id.EndowmentBooks>(
+        return getBooksByForeignID<Endowments.Id.EndowmentBooks>(
             id = filter.id.toInt(),
             limit = filter.limit?.toInt(),
             offset = filter.offset
@@ -115,7 +115,7 @@ class PostgresBookRepository : BookRepository {
     }
 
     private fun getBookBaseQuery(): Query {
-        return BookTable.innerJoin(BookAuthorTable).innerJoin(AuthorTable)
+        return BookTable.leftJoin(BookAuthorTable).leftJoin(AuthorTable)
             .select(AuthorTable.columns + BookTable.columns)
     }
 }

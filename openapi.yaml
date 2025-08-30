@@ -24,6 +24,12 @@ paths:
       tags:
         - books
       parameters:
+        - name: author
+          in: query
+          description: Filter by author ID
+          schema:
+            type: integer
+            format: int64
         - name: genre
           in: query
           description: Filter by genre ID
@@ -76,7 +82,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  books:
+                  items:
                     type: array
                     items:
                       $ref: '#/components/schemas/Book'
@@ -158,7 +164,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  authors:
+                  items:
                     type: array
                     items:
                       $ref: '#/components/schemas/Author'
@@ -238,7 +244,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  books:
+                  items:
                     type: array
                     items:
                       $ref: '#/components/schemas/Book'
@@ -338,7 +344,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  books:
+                  items:
                     type: array
                     items:
                       $ref: '#/components/schemas/Book'
@@ -438,7 +444,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  books:
+                  items:
                     type: array
                     items:
                       $ref: '#/components/schemas/Book'

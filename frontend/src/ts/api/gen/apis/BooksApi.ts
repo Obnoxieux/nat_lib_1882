@@ -30,6 +30,7 @@ export interface GetBookByIdRequest {
 }
 
 export interface GetBooksRequest {
+    author?: number;
     genre?: number;
     endowment?: number;
     manuscript?: boolean;
@@ -85,6 +86,10 @@ export class BooksApi extends runtime.BaseAPI {
      */
     async getBooksRaw(requestParameters: GetBooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBooks200Response>> {
         const queryParameters: any = {};
+
+        if (requestParameters['author'] != null) {
+            queryParameters['author'] = requestParameters['author'];
+        }
 
         if (requestParameters['genre'] != null) {
             queryParameters['genre'] = requestParameters['genre'];

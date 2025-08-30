@@ -1,10 +1,11 @@
 import {customElement, property, state} from "lit/decorators.js";
 import {html, LitElement} from "lit";
-import type {Book} from "../types/Book.ts";
 import {Task} from "@lit/task";
 import type {Genre} from "../types/Genre.ts";
 import type {Endowment} from "../types/Endowment.ts";
 import {live} from "lit/directives/live.js";
+import {BooksApi, EndowmentsApi, GenresApi, type GetBooks200Response, type GetBooksRequest} from "../api/gen";
+import {LocalAPIConfiguration} from "../api/APIConfiguration.ts";
 
 @customElement("book-datatable")
 export class BookDatatable extends LitElement {
@@ -12,7 +13,7 @@ export class BookDatatable extends LitElement {
   manuscript = true;
 
   @property({type: Boolean})
-  print = true;
+  print = false;
 
   @property({type: Number})
   author = 0;
@@ -29,38 +30,42 @@ export class BookDatatable extends LitElement {
   @state()
   showFilter = true;
 
-  private _bookTask = new Task(this, {
-    task: async ([author], {signal}) => {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/books?author=${author}`, {signal});
-      if (!response.ok) {
-        throw new Error(String(response.status));
-      }
+  private _bookClient = new BooksApi(LocalAPIConfiguration);
+  private _genreClient = new GenresApi(LocalAPIConfiguration);
+  private _endowmentClient = new EndowmentsApi(LocalAPIConfiguration);
 
-      return await response.json() as Book[];
+  private _bookTask = new Task(this, {
+    task: async ([
+                   author, manuscript, print, genre, endowment, itemsPerPage
+                 ], {signal}) => {
+      const requestConfig: GetBooksRequest = {
+        author: author !== 0 ? author : undefined,
+        manuscript: manuscript,
+        print: print,
+        genre: genre !== 0 ? genre : undefined,
+        endowment: endowment !== 0 ? endowment : undefined,
+        limit: itemsPerPage,
+      };
+      const response = await this._bookClient.getBooks(requestConfig, {signal});
+      return response;
     },
-    args: () => [this.author]
+    args: () => [
+      this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage
+    ],
   });
 
   private _genreTask = new Task(this, {
     task: async ([], {signal}) => {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/genres`, {signal});
-      if (!response.ok) {
-        throw new Error(String(response.status));
-      }
-
-      return await response.json() as Genre[];
+      const response = await this._genreClient.getGenres({}, {signal});
+      return response;
     },
     args: () => []
   });
 
   private _endowmentTask = new Task(this, {
     task: async ([], {signal}) => {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/endowments`, {signal});
-      if (!response.ok) {
-        throw new Error(String(response.status));
-      }
-
-      return await response.json() as Endowment[];
+      const response = await this._endowmentClient.getEndowments({}, {signal});
+      return response;
     },
     args: () => []
   });
@@ -110,8 +115,8 @@ export class BookDatatable extends LitElement {
               <td colspan="11">Failed to load books: ${String(e)}</td>
             </tr>
           `,
-          complete: (books: Book[]) => html`
-            ${books.map((book) => html`
+          complete: (response: GetBooks200Response) => html`
+            ${response.items?.map((book) => html`
                       <tr>
                         <td>${book.id ?? ''}</td>
                         <td>${book.number ?? ''}</td>
@@ -143,13 +148,22 @@ export class BookDatatable extends LitElement {
         <form class="book-form">
           <label>
             Author
-            <input type="text" placeholder="Author name..." .value=${live(this.author)}
-                   @change=${this.handleAuthorChange}>
+            <input
+                    type="text"
+                    placeholder="Author name..."
+                    .value=${live(this.author ?? "")}
+                    @change=${this.handleAuthorChange}
+            >
           </label>
 
           <label>
             Genre
-            <select id="select" dir="rtl">
+            <select
+                    id="select"
+                    dir="rtl"
+                    .value=${live(this.genre)}
+                    @change=${this.handleGenreChange}>
+              >
               <option value="0">All Genres</option>
               ${this._genreTask.render({
                 pending: () => '',
@@ -166,7 +180,13 @@ export class BookDatatable extends LitElement {
 
           <label>
             Endowment
-            <select id="select" dir="rtl">
+            <select
+                    id="select"
+                    dir="rtl"
+                    .value=${live(this.endowment)}
+                    @change=${this.handleEndowmentChange}>
+
+              >
               <option value="0">All Endowments</option>
 
               ${this._endowmentTask.render({
@@ -184,18 +204,18 @@ export class BookDatatable extends LitElement {
           <div class="checkbox-container">
             <label>
               Manuscript
-              <input type="checkbox" ?checked=${this.manuscript}>
+              <input type="checkbox" ?checked=${this.manuscript} @change=${this.handleManuscriptChange}>
             </label>
             <label>
               Print
-              <input type="checkbox" ?checked=${this.print}>
+              <input type="checkbox" ?checked=${this.print} @change=${this.handlePrintChange}>
             </label>
           </div>
 
           <div class="pagination-container">
             <label>
               Items per page:
-              <select .value=${this.itemsPerPage}>
+              <select .value=${this.itemsPerPage} @change=${this.handleItemsPerPageChange}>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="50">50</option>
@@ -215,10 +235,32 @@ export class BookDatatable extends LitElement {
     }
   }
 
-  protected handleAuthorChange(e: InputEvent) {
-    // @ts-expect-error
-    this.author = e.target?.value;
+  protected handleAuthorChange(e: Event) {
+    const value = (e.target as HTMLInputElement).value.trim();
+    // Set undefined when empty, otherwise coerce to number
+    this.author = value === "" ? undefined : Number(value);
   }
+
+  protected handleGenreChange(e: Event) {
+    this.genre = Number((e.target as HTMLSelectElement).value) || 0;
+  }
+
+  protected handleEndowmentChange(e: Event) {
+    this.endowment = Number((e.target as HTMLSelectElement).value) || 0;
+  }
+
+  protected handleManuscriptChange(e: Event) {
+    this.manuscript = (e.target as HTMLInputElement).checked;
+  }
+
+  protected handlePrintChange(e: Event) {
+    this.print = (e.target as HTMLInputElement).checked;
+  }
+
+  protected handleItemsPerPageChange(e: Event) {
+    this.itemsPerPage = Number((e.target as HTMLSelectElement).value);
+  }
+
 
   protected createRenderRoot() {
     return this;

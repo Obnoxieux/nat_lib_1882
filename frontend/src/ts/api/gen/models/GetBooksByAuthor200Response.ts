@@ -31,7 +31,7 @@ export interface GetBooksByAuthor200Response {
      * @type {Array<Book>}
      * @memberof GetBooksByAuthor200Response
      */
-    books?: Array<Book>;
+    items?: Array<Book>;
     /**
      * 
      * @type {number}
@@ -69,7 +69,7 @@ export function GetBooksByAuthor200ResponseFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'books': json['books'] == null ? undefined : ((json['books'] as Array<any>).map(BookFromJSON)),
+        'items': json['items'] == null ? undefined : ((json['items'] as Array<any>).map(BookFromJSON)),
         'total': json['total'] == null ? undefined : json['total'],
         'limit': json['limit'] == null ? undefined : json['limit'],
         'offset': json['offset'] == null ? undefined : json['offset'],
@@ -82,7 +82,7 @@ export function GetBooksByAuthor200ResponseToJSON(value?: GetBooksByAuthor200Res
     }
     return {
         
-        'books': value['books'] == null ? undefined : ((value['books'] as Array<any>).map(BookToJSON)),
+        'items': value['items'] == null ? undefined : ((value['items'] as Array<any>).map(BookToJSON)),
         'total': value['total'],
         'limit': value['limit'],
         'offset': value['offset'],

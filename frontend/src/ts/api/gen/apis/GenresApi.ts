@@ -141,7 +141,7 @@ export class GenresApi extends runtime.BaseAPI {
      * Retrieve a list of all genres in the catalogue
      * List all genres
      */
-    async getGenres(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Genre>> {
+    async getGenres(initOverrides?: RequestInit | runtime.InitOverrideFunction, p0?: { signal: AbortSignal; }): Promise<Array<Genre>> {
         const response = await this.getGenresRaw(initOverrides);
         return await response.value();
     }

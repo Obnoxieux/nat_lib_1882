@@ -141,7 +141,7 @@ export class EndowmentsApi extends runtime.BaseAPI {
      * Retrieve a list of all endowments in the catalogue
      * List all endowments
      */
-    async getEndowments(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Endowment>> {
+    async getEndowments(initOverrides?: RequestInit | runtime.InitOverrideFunction, p0?: { signal: AbortSignal; }): Promise<Array<Endowment>> {
         const response = await this.getEndowmentsRaw(initOverrides);
         return await response.value();
     }

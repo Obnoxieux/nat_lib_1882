@@ -31,7 +31,7 @@ export interface GetAuthors200Response {
      * @type {Array<Author>}
      * @memberof GetAuthors200Response
      */
-    authors?: Array<Author>;
+    items?: Array<Author>;
     /**
      * 
      * @type {number}
@@ -69,7 +69,7 @@ export function GetAuthors200ResponseFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'authors': json['authors'] == null ? undefined : ((json['authors'] as Array<any>).map(AuthorFromJSON)),
+        'items': json['items'] == null ? undefined : ((json['items'] as Array<any>).map(AuthorFromJSON)),
         'total': json['total'] == null ? undefined : json['total'],
         'limit': json['limit'] == null ? undefined : json['limit'],
         'offset': json['offset'] == null ? undefined : json['offset'],
@@ -82,7 +82,7 @@ export function GetAuthors200ResponseToJSON(value?: GetAuthors200Response | null
     }
     return {
         
-        'authors': value['authors'] == null ? undefined : ((value['authors'] as Array<any>).map(AuthorToJSON)),
+        'items': value['items'] == null ? undefined : ((value['items'] as Array<any>).map(AuthorToJSON)),
         'total': value['total'],
         'limit': value['limit'],
         'offset': value['offset'],

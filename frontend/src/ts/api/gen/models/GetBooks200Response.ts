@@ -31,7 +31,7 @@ export interface GetBooks200Response {
      * @type {Array<Book>}
      * @memberof GetBooks200Response
      */
-    books?: Array<Book>;
+    items?: Array<Book>;
     /**
      * Total number of books matching the criteria
      * @type {number}
@@ -69,7 +69,7 @@ export function GetBooks200ResponseFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'books': json['books'] == null ? undefined : ((json['books'] as Array<any>).map(BookFromJSON)),
+        'items': json['items'] == null ? undefined : ((json['items'] as Array<any>).map(BookFromJSON)),
         'total': json['total'] == null ? undefined : json['total'],
         'limit': json['limit'] == null ? undefined : json['limit'],
         'offset': json['offset'] == null ? undefined : json['offset'],
@@ -82,7 +82,7 @@ export function GetBooks200ResponseToJSON(value?: GetBooks200Response | null): a
     }
     return {
         
-        'books': value['books'] == null ? undefined : ((value['books'] as Array<any>).map(BookToJSON)),
+        'items': value['items'] == null ? undefined : ((value['items'] as Array<any>).map(BookToJSON)),
         'total': value['total'],
         'limit': value['limit'],
         'offset': value['offset'],
