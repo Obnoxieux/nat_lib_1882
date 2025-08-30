@@ -27,6 +27,9 @@ export class BookDatatable extends LitElement {
   @property({type: Number})
   itemsPerPage = 10;
 
+  @property({type: String})
+  search = "";
+
   @state()
   showFilter = true;
 
@@ -35,9 +38,10 @@ export class BookDatatable extends LitElement {
   private _endowmentClient = new EndowmentsApi(LocalAPIConfiguration);
 
   private _bookTask = new Task(this, {
-    task: async ([
-                   author, manuscript, print, genre, endowment, itemsPerPage
-                 ], {signal}) => {
+    task: async (
+        [
+          author, manuscript, print, genre, endowment, itemsPerPage, search
+        ], {signal}) => {
       const requestConfig: GetBooksRequest = {
         author: author !== 0 ? author : undefined,
         manuscript: manuscript,
@@ -45,12 +49,13 @@ export class BookDatatable extends LitElement {
         genre: genre !== 0 ? genre : undefined,
         endowment: endowment !== 0 ? endowment : undefined,
         limit: itemsPerPage,
+        search: search !== "" ? search : undefined,
       };
       const response = await this._bookClient.getBooks(requestConfig, {signal});
       return response;
     },
     args: () => [
-      this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage
+      this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage, this.search,
     ],
   });
 
@@ -226,7 +231,13 @@ export class BookDatatable extends LitElement {
 
           <label for="book-search-input">
             Search:
-            <input id="book-search-input" placeholder="Search..." type="search">
+            <input
+                    id="book-search-input"
+                    placeholder="Search..."
+                    type="search"
+                    .value=${live(this.search)}
+                    @change=${(e: Event) => this.search = (e.target as HTMLInputElement).value}
+            >
           </label>
         </form>
       `;
