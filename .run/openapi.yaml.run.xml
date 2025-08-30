@@ -1,0 +1,36 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="openapi.yaml" type="SwaggerCodegen" editBeforeRun="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <option name="allowRunningInParallel" value="false" />
+    <option name="customTemplatesPath" value="" />
+    <option name="generateToPath" value="$PROJECT_DIR$/frontend/src/ts/api/gen" />
+    <option name="generationParameters">
+      <list>
+        <CliArgumentViewModel>
+          <option name="name" value="supportsES6" />
+          <option name="value" value="true" />
+        </CliArgumentViewModel>
+        <CliArgumentViewModel>
+          <option name="name" value="stringEnums" />
+          <option name="value" value="true" />
+        </CliArgumentViewModel>
+        <CliArgumentViewModel>
+          <option name="name" value="modelPropertyNaming" />
+          <option name="value" value="camelCase" />
+        </CliArgumentViewModel>
+        <CliArgumentViewModel>
+          <option name="name" value="paramNaming" />
+          <option name="value" value="camelCase" />
+        </CliArgumentViewModel>
+      </list>
+    </option>
+    <option name="generatorType" value="OPENAPI_GENERATOR_V7" />
+    <option name="jdkPath" value="$APPLICATION_HOME_DIR$/jbr/Contents/Home/bin/java" />
+    <option name="language" value="typescript-fetch" />
+    <option name="projectPathOnTarget" />
+    <option name="selectedOptions">
+      <list />
+    </option>
+    <option name="specificationPath" value="$PROJECT_DIR$/openapi.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

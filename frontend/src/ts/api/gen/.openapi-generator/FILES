@@ -1,0 +1,16 @@
+apis/AuthorsApi.ts
+apis/BooksApi.ts
+apis/EndowmentsApi.ts
+apis/GenresApi.ts
+apis/index.ts
+index.ts
+models/Author.ts
+models/Book.ts
+models/Endowment.ts
+models/Genre.ts
+models/GetAuthors200Response.ts
+models/GetBooks200Response.ts
+models/GetBooksByAuthor200Response.ts
+models/ModelError.ts
+models/index.ts
+runtime.ts

@@ -11,7 +11,7 @@ info:
 servers:
   - url: 'http://localhost:8080'
     description: Development server
-  - url: 'https://api.example.com'
+  - url: 'https://api.natlib.obnx.dev'
     description: Production server
 
 paths:
