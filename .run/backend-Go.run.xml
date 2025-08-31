@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="backend-Go" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="backend-go" />
+    <working_directory value="$PROJECT_DIR$/backend-go" />
+    <kind value="PACKAGE" />
+    <package value="github.com/Obnoxieux/nat_lib_1882" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/backend-go/main.go" />
+    <method v="2" />
+  </configuration>
+</component>
