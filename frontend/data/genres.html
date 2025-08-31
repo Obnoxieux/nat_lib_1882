@@ -4,33 +4,22 @@
   <title>Genres</title>
   <meta content="Browse all genres in the Damascus Public Library catalogue" name="description">
   {{> head }}
+  <script src="/src/ts/components/GenreTable.js" type="module"></script>
 </head>
 <body>
 {{> nav }}
 
 <main>
-  <h1>Genres Data</h1>
+  <h1>Genres in the Catalogue</h1>
 
+  <p>
+    This is a comprehensive list of all genres in the catalogue.
+    The order and naming are based verbatim on the original source.
+  </p>
   <section class="genres-table-section">
     <h2 class="genres-table-header">Table View</h2>
 
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      @for (genre in genres)
-      <tr>
-        <td>${genre.id}</td>
-        <td dir="rtl" lang="ar">${genre.name}</td>
-      </tr>
-      @endfor
-      </tbody>
-    </table>
+    <genre-table></genre-table>
 
     <details class="genre-column-info">
       <summary>Detailed Column information</summary>

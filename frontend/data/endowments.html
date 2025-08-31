@@ -4,6 +4,7 @@
   <title>Endowments</title>
   <meta content="Browse all endowments in the Damascus Public Library catalogue" name="description">
   {{> head }}
+  <script src="/src/ts/components/EndowmentTable.js" type="module"></script>
 </head>
 <body>
 {{> nav }}
@@ -11,26 +12,18 @@
 <main>
   <h1>Endowments Data</h1>
 
+  <p>
+    This is a comprehensive list of all endowments in the catalogue.
+    The order and naming are based verbatim on the original source.
+
+    An <i>endowment</i> in this context is a previously existing collection or library whose books were transferred
+    to the new public library. Some of those collections were pretty big, while others only consisted of a few books.
+  </p>
+
   <section class="endowments-table-section">
     <h2 class="endowments-table-header">Table View</h2>
 
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      @for (endowment in endowments)
-      <tr>
-        <td>${endowment.id}</td>
-        <td dir="rtl" lang="ar">${endowment.name}</td>
-      </tr>
-      @endfor
-      </tbody>
-    </table>
+    <endowment-table></endowment-table>
 
     <details class="endowment-column-info">
       <summary>Detailed Column information</summary>

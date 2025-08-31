@@ -4,6 +4,7 @@
   <title>Authors</title>
   <meta content="Browse all authors in the Damascus Public Library catalogue" name="description">
   {{> head }}
+  <script src="/src/ts/components/AuthorTable.js" type="module"></script>
 </head>
 <body>
 {{> nav }}
@@ -14,23 +15,7 @@
   <section class="authors-table-section">
     <h2 class="authors-table-header">Table View</h2>
 
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      @for (author in authors)
-      <tr>
-        <td>${author.id}</td>
-        <td dir="rtl" lang="ar">${author.name}</td>
-      </tr>
-      @endfor
-      </tbody>
-    </table>
+    <author-table></author-table>
 
     <details class="author-column-info">
       <summary>Detailed Column information</summary>

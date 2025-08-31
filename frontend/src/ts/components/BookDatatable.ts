@@ -281,7 +281,6 @@ export class BookDatatable extends LitElement {
 
   protected handleAuthorChange(e: Event) {
     const value = (e.target as HTMLInputElement).value.trim();
-    // Set undefined when empty, otherwise coerce to number
     this.author = value === "" ? 0 : Number(value);
   }
 
