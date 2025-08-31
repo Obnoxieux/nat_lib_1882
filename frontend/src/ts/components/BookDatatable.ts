@@ -4,7 +4,15 @@ import {Task} from "@lit/task";
 import type {Genre} from "../types/Genre.ts";
 import type {Endowment} from "../types/Endowment.ts";
 import {live} from "lit/directives/live.js";
-import {BooksApi, EndowmentsApi, GenresApi, type GetBooks200Response, type GetBooksRequest} from "../api/gen";
+import {
+  AuthorsApi,
+  BooksApi,
+  EndowmentsApi,
+  GenresApi,
+  type GetAuthors200Response,
+  type GetBooks200Response,
+  type GetBooksRequest
+} from "../api/gen";
 import {LocalAPIConfiguration} from "../api/APIConfiguration.ts";
 
 @customElement("book-datatable")
@@ -36,6 +44,7 @@ export class BookDatatable extends LitElement {
   private _bookClient = new BooksApi(LocalAPIConfiguration);
   private _genreClient = new GenresApi(LocalAPIConfiguration);
   private _endowmentClient = new EndowmentsApi(LocalAPIConfiguration);
+  private _authorClient = new AuthorsApi(LocalAPIConfiguration);
 
   private _bookTask = new Task(this, {
     task: async (
@@ -57,6 +66,14 @@ export class BookDatatable extends LitElement {
     args: () => [
       this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage, this.search,
     ],
+  });
+
+  private _authorTask = new Task(this, {
+    task: async ([], {signal}) => {
+      const response = await this._authorClient.getAuthors({}, {signal});
+      return response;
+    },
+    args: () => []
   });
 
   private _genreTask = new Task(this, {
@@ -155,11 +172,27 @@ export class BookDatatable extends LitElement {
             Author
             <input
                     type="text"
-                    placeholder="Author name..."
+                    placeholder="Author name"
+                    list="authors-suggestion-list"
+                    dir="rtl"
+                    lang="ar"
                     .value=${live(this.author ?? "")}
                     @change=${this.handleAuthorChange}
             >
           </label>
+
+          <datalist id="authors-suggestion-list">
+            ${this._authorTask.render({
+              pending: () => '',
+              error: (_) => '',
+              complete: (response: GetAuthors200Response) => html`
+                ${response.items?.map((author) => html`
+                  <option value="${author.id}" label=${author.name}></option>
+                `)}
+              `
+            })}
+
+          </datalist>
 
           <label>
             Genre
@@ -249,7 +282,7 @@ export class BookDatatable extends LitElement {
   protected handleAuthorChange(e: Event) {
     const value = (e.target as HTMLInputElement).value.trim();
     // Set undefined when empty, otherwise coerce to number
-    this.author = value === "" ? undefined : Number(value);
+    this.author = value === "" ? 0 : Number(value);
   }
 
   protected handleGenreChange(e: Event) {
