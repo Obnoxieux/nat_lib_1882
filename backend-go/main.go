@@ -10,6 +10,7 @@ import (
 	"github.com/Obnoxieux/nat_lib_1882/api"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
+	"github.com/pocketbase/dbx"
 	"github.com/subosito/gotenv"
 )
 
@@ -24,7 +25,14 @@ func init() {
 }
 
 func main() {
-	server := api.NewServer()
+	dsn := os.Getenv("PG_DSN")
+
+	db, err := dbx.MustOpen("postgres", dsn)
+	if err != nil {
+		log.Fatal("Could not open connection to database", "error", err)
+	}
+
+	server := api.NewServer(db)
 
 	strictHandler := api.NewStrictHandler(server, nil)
 

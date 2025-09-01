@@ -4,29 +4,47 @@ import (
 	"context"
 
 	"github.com/Obnoxieux/nat_lib_1882/db"
+	"github.com/pocketbase/dbx"
 )
 
 var _ StrictServerInterface = (*Server)(nil)
 
-type Server struct{}
+type Server struct {
+	AuthorRepository db.AuthorRepository
+}
 
-func NewServer() Server {
-	return Server{}
+func NewServer(database *dbx.DB) Server {
+	return Server{
+		AuthorRepository: db.PostgresAuthorRepository{DB: database},
+	}
 }
 
 // GetAuthors List all authors
 // (GET /authors)
 func (s Server) GetAuthors(ctx context.Context, request GetAuthorsRequestObject) (GetAuthorsResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	authors, err := s.AuthorRepository.GetAllAuthors()
+	if err != nil {
+		return nil, err
+	}
+	var response []Author
+	for _, author := range authors {
+		response = append(response, Author{Id: author.Id, Name: author.Name})
+	}
+	return GetAuthors200JSONResponse{
+		Items:  response,
+		Limit:  0,
+		Offset: 0,
+		Total:  len(response),
+	}, nil
 }
 
 // GetAuthorById Get a specific author
 // (GET /authors/{id})
 func (s Server) GetAuthorById(ctx context.Context, request GetAuthorByIdRequestObject) (GetAuthorByIdResponseObject, error) {
-	repo := db.TestAuthorRepository{}
-	author := repo.GetSingleAuthorByID(request.Id)
-
-	//transform from the DB model
+	author, err := s.AuthorRepository.GetSingleAuthorByID(request.Id)
+	if err != nil {
+		return nil, err
+	}
 	response := Author{Id: author.Id, Name: author.Name}
 
 	return GetAuthorById200JSONResponse(response), nil

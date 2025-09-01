@@ -1,26 +1,39 @@
 package db
 
-import "sync"
-
-type Author struct {
-	Id   int64  `db:"id"`
-	Name string `db:"name"`
-}
+import "github.com/pocketbase/dbx"
 
 type AuthorRepository interface {
-	GetSingleAuthorByID(id int64) Author
+	GetSingleAuthorByID(id int64) (Author, error)
+	GetAllAuthors() ([]Author, error)
 }
 
-type TestAuthorRepository struct {
-	Lock sync.Mutex
+type PostgresAuthorRepository struct {
+	DB *dbx.DB
 }
 
-func (repo *TestAuthorRepository) GetSingleAuthorByID(id int64) Author {
-	repo.Lock.Lock()
-	defer repo.Lock.Unlock()
+func (repo PostgresAuthorRepository) GetSingleAuthorByID(id int64) (Author, error) {
+	var author Author
+	query := repo.DB.
+		Select("*").
+		From(AuthorTable).
+		Where(dbx.NewExp("id = {:id}", dbx.Params{"id": id}))
 
-	return Author{
-		Id:   9999,
-		Name: "الأصفهاني، أبو الفرج",
+	err := query.One(&author)
+	if err != nil {
+		return author, err
 	}
+	return author, nil
+}
+
+func (repo PostgresAuthorRepository) GetAllAuthors() ([]Author, error) {
+	var authors []Author
+	query := repo.DB.
+		Select("*").
+		From(AuthorTable)
+
+	err := query.All(&authors)
+	if err != nil {
+		return authors, err
+	}
+	return authors, nil
 }
