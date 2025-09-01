@@ -8,6 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/lib/pq v1.10.9
 	github.com/oapi-codegen/runtime v1.1.2
+	github.com/pocketbase/dbx v1.11.0
 	github.com/subosito/gotenv v1.6.0
 )
 
