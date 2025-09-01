@@ -26,40 +26,40 @@ type Author struct {
 // Book defines model for Book.
 type Book struct {
 	// Author Author name (redundant field, see authors relation)
-	Author *string `json:"author"`
+	Author string `json:"author"`
 
 	// Authors Authors of the book
-	Authors *[]Author `json:"authors,omitempty"`
+	Authors []Author `json:"authors,omitempty"`
 
 	// Comment General comment
-	Comment *string `json:"comment"`
+	Comment string `json:"comment"`
 
 	// EditorComment Editor's comment
-	EditorComment *string `json:"editor_comment"`
+	EditorComment string `json:"editor_comment"`
 
 	// Endowment Book endowment
-	Endowment *Endowment `json:"endowment"`
+	Endowment Endowment `json:"endowment"`
 
 	// Genre Book genre
-	Genre *Genre `json:"genre"`
+	Genre Genre `json:"genre"`
 
 	// Id Unique identifier for the book
 	Id int64 `json:"id"`
 
 	// Manuscript Whether the book is a manuscript
-	Manuscript *bool `json:"manuscript"`
+	Manuscript bool `json:"manuscript"`
 
 	// Number Catalogue number
 	Number int64 `json:"number"`
 
 	// Print Whether the book is printed
-	Print *bool `json:"print"`
+	Print bool `json:"print"`
 
 	// Title Book title
 	Title string `json:"title"`
 
 	// Volume Volume information
-	Volume *string `json:"volume"`
+	Volume string `json:"volume"`
 }
 
 // Endowment defines model for Endowment.
@@ -101,67 +101,67 @@ type NotFound = Error
 // GetAuthorsParams defines parameters for GetAuthors.
 type GetAuthorsParams struct {
 	// Search Generic free-text search term to filter authors. The only supported field that is searched is the author's name for now.
-	Search *string `form:"search,omitempty" json:"search,omitempty"`
+	Search string `form:"search,omitempty" json:"search,omitempty"`
 
 	// Limit Maximum number of results to return
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Number of results to skip
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetBooksByAuthorParams defines parameters for GetBooksByAuthor.
 type GetBooksByAuthorParams struct {
 	// Limit Maximum number of results to return
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Number of results to skip
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetBooksParams defines parameters for GetBooks.
 type GetBooksParams struct {
 	// Author Filter by author ID
-	Author *int64 `form:"author,omitempty" json:"author,omitempty"`
+	Author int64 `form:"author,omitempty" json:"author,omitempty"`
 
 	// Genre Filter by genre ID
-	Genre *int64 `form:"genre,omitempty" json:"genre,omitempty"`
+	Genre int64 `form:"genre,omitempty" json:"genre,omitempty"`
 
 	// Endowment Filter by endowment ID
-	Endowment *int64 `form:"endowment,omitempty" json:"endowment,omitempty"`
+	Endowment int64 `form:"endowment,omitempty" json:"endowment,omitempty"`
 
 	// Manuscript Filter by manuscript status
-	Manuscript *bool `form:"manuscript,omitempty" json:"manuscript,omitempty"`
+	Manuscript bool `form:"manuscript,omitempty" json:"manuscript,omitempty"`
 
 	// Print Filter by print status
-	Print *bool `form:"print,omitempty" json:"print,omitempty"`
+	Print bool `form:"print,omitempty" json:"print,omitempty"`
 
 	// Search Generic free-text search term to filter books
-	Search *string `form:"search,omitempty" json:"search,omitempty"`
+	Search string `form:"search,omitempty" json:"search,omitempty"`
 
 	// Limit Maximum number of results to return
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Number of results to skip
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetBooksByEndowmentParams defines parameters for GetBooksByEndowment.
 type GetBooksByEndowmentParams struct {
 	// Limit Maximum number of results to return
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Number of results to skip
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetBooksByGenreParams defines parameters for GetBooksByGenre.
 type GetBooksByGenreParams struct {
 	// Limit Maximum number of results to return
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Number of results to skip
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // ServerInterface represents all server handlers.
@@ -749,10 +749,10 @@ type GetAuthorsResponseObject interface {
 }
 
 type GetAuthors200JSONResponse struct {
-	Items  *[]Author `json:"items,omitempty"`
-	Limit  *int      `json:"limit,omitempty"`
-	Offset *int      `json:"offset,omitempty"`
-	Total  *int      `json:"total,omitempty"`
+	Items  []Author `json:"items,omitempty"`
+	Limit  int      `json:"limit,omitempty"`
+	Offset int      `json:"offset,omitempty"`
+	Total  int      `json:"total,omitempty"`
 }
 
 func (response GetAuthors200JSONResponse) VisitGetAuthorsResponse(w http.ResponseWriter) error {
@@ -829,10 +829,10 @@ type GetBooksByAuthorResponseObject interface {
 }
 
 type GetBooksByAuthor200JSONResponse struct {
-	Items  *[]Book `json:"items,omitempty"`
-	Limit  *int    `json:"limit,omitempty"`
-	Offset *int    `json:"offset,omitempty"`
-	Total  *int    `json:"total,omitempty"`
+	Items  []Book `json:"items,omitempty"`
+	Limit  int    `json:"limit,omitempty"`
+	Offset int    `json:"offset,omitempty"`
+	Total  int    `json:"total,omitempty"`
 }
 
 func (response GetBooksByAuthor200JSONResponse) VisitGetBooksByAuthorResponse(w http.ResponseWriter) error {
@@ -871,12 +871,12 @@ type GetBooksResponseObject interface {
 }
 
 type GetBooks200JSONResponse struct {
-	Items  *[]Book `json:"items,omitempty"`
-	Limit  *int    `json:"limit,omitempty"`
-	Offset *int    `json:"offset,omitempty"`
+	Items  []Book `json:"items,omitempty"`
+	Limit  int    `json:"limit,omitempty"`
+	Offset int    `json:"offset,omitempty"`
 
 	// Total Total number of books matching the criteria
-	Total *int `json:"total,omitempty"`
+	Total int `json:"total,omitempty"`
 }
 
 func (response GetBooks200JSONResponse) VisitGetBooksResponse(w http.ResponseWriter) error {
@@ -1017,10 +1017,10 @@ type GetBooksByEndowmentResponseObject interface {
 }
 
 type GetBooksByEndowment200JSONResponse struct {
-	Items  *[]Book `json:"items,omitempty"`
-	Limit  *int    `json:"limit,omitempty"`
-	Offset *int    `json:"offset,omitempty"`
-	Total  *int    `json:"total,omitempty"`
+	Items  []Book `json:"items,omitempty"`
+	Limit  int    `json:"limit,omitempty"`
+	Offset int    `json:"offset,omitempty"`
+	Total  int    `json:"total,omitempty"`
 }
 
 func (response GetBooksByEndowment200JSONResponse) VisitGetBooksByEndowmentResponse(w http.ResponseWriter) error {
@@ -1124,10 +1124,10 @@ type GetBooksByGenreResponseObject interface {
 }
 
 type GetBooksByGenre200JSONResponse struct {
-	Items  *[]Book `json:"items,omitempty"`
-	Limit  *int    `json:"limit,omitempty"`
-	Offset *int    `json:"offset,omitempty"`
-	Total  *int    `json:"total,omitempty"`
+	Items  []Book `json:"items,omitempty"`
+	Limit  int    `json:"limit,omitempty"`
+	Offset int    `json:"offset,omitempty"`
+	Total  int    `json:"total,omitempty"`
 }
 
 func (response GetBooksByGenre200JSONResponse) VisitGetBooksByGenreResponse(w http.ResponseWriter) error {

@@ -5,3 +5,5 @@ generate:
   strict-server: true
   models: true
 output: gen.go
+output-options:
+  prefer-skip-optional-pointer: true
