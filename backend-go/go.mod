@@ -11,6 +11,8 @@ require (
 	github.com/subosito/gotenv v1.6.0
 )
 
+replace github.com/dprotaso/go-yit v0.0.0-20250813133525-cb83ee5a5e53 => github.com/dprotaso/go-yit v0.0.0-20250513224043-18a80f8f6df4
+
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/dprotaso/go-yit v0.0.0-20250813133525-cb83ee5a5e53 // indirect
@@ -29,7 +31,6 @@ require (
 	github.com/speakeasy-api/openapi-overlay v0.10.3 // indirect
 	github.com/vmware-labs/yaml-jsonpath v0.3.2 // indirect
 	github.com/woodsbury/decimal128 v1.4.0 // indirect
-	go.yaml.in/yaml/v4 v4.0.0-rc.2 // indirect
 	golang.org/x/mod v0.27.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/text v0.28.0 // indirect

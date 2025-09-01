@@ -121,6 +121,9 @@ type GetBooksByAuthorParams struct {
 
 // GetBooksParams defines parameters for GetBooks.
 type GetBooksParams struct {
+	// Author Filter by author ID
+	Author *int64 `form:"author,omitempty" json:"author,omitempty"`
+
 	// Genre Filter by genre ID
 	Genre *int64 `form:"genre,omitempty" json:"genre,omitempty"`
 
@@ -326,6 +329,14 @@ func (siw *ServerInterfaceWrapper) GetBooks(w http.ResponseWriter, r *http.Reque
 
 	// Parameter object where we will unmarshal all parameters from the context
 	var params GetBooksParams
+
+	// ------------- Optional query parameter "author" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "author", r.URL.Query(), &params.Author)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "author", Err: err})
+		return
+	}
 
 	// ------------- Optional query parameter "genre" -------------
 
@@ -738,10 +749,10 @@ type GetAuthorsResponseObject interface {
 }
 
 type GetAuthors200JSONResponse struct {
-	Authors *[]Author `json:"authors,omitempty"`
-	Limit   *int      `json:"limit,omitempty"`
-	Offset  *int      `json:"offset,omitempty"`
-	Total   *int      `json:"total,omitempty"`
+	Items  *[]Author `json:"items,omitempty"`
+	Limit  *int      `json:"limit,omitempty"`
+	Offset *int      `json:"offset,omitempty"`
+	Total  *int      `json:"total,omitempty"`
 }
 
 func (response GetAuthors200JSONResponse) VisitGetAuthorsResponse(w http.ResponseWriter) error {
@@ -818,7 +829,7 @@ type GetBooksByAuthorResponseObject interface {
 }
 
 type GetBooksByAuthor200JSONResponse struct {
-	Books  *[]Book `json:"books,omitempty"`
+	Items  *[]Book `json:"items,omitempty"`
 	Limit  *int    `json:"limit,omitempty"`
 	Offset *int    `json:"offset,omitempty"`
 	Total  *int    `json:"total,omitempty"`
@@ -860,7 +871,7 @@ type GetBooksResponseObject interface {
 }
 
 type GetBooks200JSONResponse struct {
-	Books  *[]Book `json:"books,omitempty"`
+	Items  *[]Book `json:"items,omitempty"`
 	Limit  *int    `json:"limit,omitempty"`
 	Offset *int    `json:"offset,omitempty"`
 
@@ -1006,7 +1017,7 @@ type GetBooksByEndowmentResponseObject interface {
 }
 
 type GetBooksByEndowment200JSONResponse struct {
-	Books  *[]Book `json:"books,omitempty"`
+	Items  *[]Book `json:"items,omitempty"`
 	Limit  *int    `json:"limit,omitempty"`
 	Offset *int    `json:"offset,omitempty"`
 	Total  *int    `json:"total,omitempty"`
@@ -1113,7 +1124,7 @@ type GetBooksByGenreResponseObject interface {
 }
 
 type GetBooksByGenre200JSONResponse struct {
-	Books  *[]Book `json:"books,omitempty"`
+	Items  *[]Book `json:"items,omitempty"`
 	Limit  *int    `json:"limit,omitempty"`
 	Offset *int    `json:"offset,omitempty"`
 	Total  *int    `json:"total,omitempty"`
