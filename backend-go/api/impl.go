@@ -10,12 +10,16 @@ import (
 var _ StrictServerInterface = (*Server)(nil)
 
 type Server struct {
-	AuthorRepository db.AuthorRepository
+	AuthorRepository    db.AuthorRepository
+	EndowmentRepository db.EndowmentRepository
+	GenreRepository     db.GenreRepository
 }
 
 func NewServer(database *dbx.DB) Server {
 	return Server{
-		AuthorRepository: db.PostgresAuthorRepository{DB: database},
+		AuthorRepository:    db.PostgresAuthorRepository{DB: database},
+		EndowmentRepository: db.PostgresEndowmentRepository{DB: database},
+		GenreRepository:     db.PostgresGenreRepository{DB: database},
 	}
 }
 
@@ -71,13 +75,26 @@ func (s Server) GetBookById(ctx context.Context, request GetBookByIdRequestObjec
 // GetEndowments List all endowments
 // (GET /endowments)
 func (s Server) GetEndowments(ctx context.Context, request GetEndowmentsRequestObject) (GetEndowmentsResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	endowments, err := s.EndowmentRepository.GetAllEndowments()
+	if err != nil {
+		return nil, err
+	}
+	var response []Endowment
+	for _, e := range endowments {
+		response = append(response, Endowment{Id: e.Id, Name: e.Name})
+	}
+	return GetEndowments200JSONResponse(response), nil
 }
 
 // GetEndowmentById Get a specific endowment
 // (GET /endowments/{id})
 func (s Server) GetEndowmentById(ctx context.Context, request GetEndowmentByIdRequestObject) (GetEndowmentByIdResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	endowment, err := s.EndowmentRepository.GetSingleEndowmentByID(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	response := Endowment{Id: endowment.Id, Name: endowment.Name}
+	return GetEndowmentById200JSONResponse(response), nil
 }
 
 // GetBooksByEndowment Get books by endowment
@@ -89,13 +106,26 @@ func (s Server) GetBooksByEndowment(ctx context.Context, request GetBooksByEndow
 // GetGenres List all genres
 // (GET /genres)
 func (s Server) GetGenres(ctx context.Context, request GetGenresRequestObject) (GetGenresResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	genres, err := s.GenreRepository.GetAllGenres()
+	if err != nil {
+		return nil, err
+	}
+	var response []Genre
+	for _, g := range genres {
+		response = append(response, Genre{Id: g.Id, Name: g.Name})
+	}
+	return GetGenres200JSONResponse(response), nil
 }
 
 // GetGenreById Get a specific genre
 // (GET /genres/{id})
 func (s Server) GetGenreById(ctx context.Context, request GetGenreByIdRequestObject) (GetGenreByIdResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	genre, err := s.GenreRepository.GetSingleGenreByID(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	response := Genre{Id: genre.Id, Name: genre.Name}
+	return GetGenreById200JSONResponse(response), nil
 }
 
 // GetBooksByGenre Get books by genre
