@@ -3,16 +3,16 @@ package db
 import "github.com/pocketbase/dbx"
 
 type GenreRepository interface {
-	GetSingleGenreByID(id int64) (Genre, error)
-	GetAllGenres() ([]Genre, error)
+	GetSingleGenreByID(id int64) (GenreEntity, error)
+	GetAllGenres() ([]GenreEntity, error)
 }
 
 type PostgresGenreRepository struct {
 	DB *dbx.DB
 }
 
-func (repo PostgresGenreRepository) GetSingleGenreByID(id int64) (Genre, error) {
-	var genre Genre
+func (repo PostgresGenreRepository) GetSingleGenreByID(id int64) (GenreEntity, error) {
+	var genre GenreEntity
 	query := repo.DB.
 		Select("*").
 		From(GenreTable).
@@ -25,8 +25,8 @@ func (repo PostgresGenreRepository) GetSingleGenreByID(id int64) (Genre, error) 
 	return genre, nil
 }
 
-func (repo PostgresGenreRepository) GetAllGenres() ([]Genre, error) {
-	var genres []Genre
+func (repo PostgresGenreRepository) GetAllGenres() ([]GenreEntity, error) {
+	var genres []GenreEntity
 	query := repo.DB.
 		Select("*").
 		From(GenreTable)

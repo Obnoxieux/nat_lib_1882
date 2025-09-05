@@ -3,16 +3,16 @@ package db
 import "github.com/pocketbase/dbx"
 
 type EndowmentRepository interface {
-	GetSingleEndowmentByID(id int64) (Endowment, error)
-	GetAllEndowments() ([]Endowment, error)
+	GetSingleEndowmentByID(id int64) (EndowmentEntity, error)
+	GetAllEndowments() ([]EndowmentEntity, error)
 }
 
 type PostgresEndowmentRepository struct {
 	DB *dbx.DB
 }
 
-func (repo PostgresEndowmentRepository) GetSingleEndowmentByID(id int64) (Endowment, error) {
-	var endowment Endowment
+func (repo PostgresEndowmentRepository) GetSingleEndowmentByID(id int64) (EndowmentEntity, error) {
+	var endowment EndowmentEntity
 	query := repo.DB.
 		Select("*").
 		From(EndowmentTable).
@@ -25,8 +25,8 @@ func (repo PostgresEndowmentRepository) GetSingleEndowmentByID(id int64) (Endowm
 	return endowment, nil
 }
 
-func (repo PostgresEndowmentRepository) GetAllEndowments() ([]Endowment, error) {
-	var endowments []Endowment
+func (repo PostgresEndowmentRepository) GetAllEndowments() ([]EndowmentEntity, error) {
+	var endowments []EndowmentEntity
 	query := repo.DB.
 		Select("*").
 		From(EndowmentTable)

@@ -3,16 +3,16 @@ package db
 import "github.com/pocketbase/dbx"
 
 type AuthorRepository interface {
-	GetSingleAuthorByID(id int64) (Author, error)
-	GetAllAuthors() ([]Author, error)
+	GetSingleAuthorByID(id int64) (AuthorEntity, error)
+	GetAllAuthors() ([]AuthorEntity, error)
 }
 
 type PostgresAuthorRepository struct {
 	DB *dbx.DB
 }
 
-func (repo PostgresAuthorRepository) GetSingleAuthorByID(id int64) (Author, error) {
-	var author Author
+func (repo PostgresAuthorRepository) GetSingleAuthorByID(id int64) (AuthorEntity, error) {
+	var author AuthorEntity
 	query := repo.DB.
 		Select("*").
 		From(AuthorTable).
@@ -25,8 +25,8 @@ func (repo PostgresAuthorRepository) GetSingleAuthorByID(id int64) (Author, erro
 	return author, nil
 }
 
-func (repo PostgresAuthorRepository) GetAllAuthors() ([]Author, error) {
-	var authors []Author
+func (repo PostgresAuthorRepository) GetAllAuthors() ([]AuthorEntity, error) {
+	var authors []AuthorEntity
 	query := repo.DB.
 		Select("*").
 		From(AuthorTable)
