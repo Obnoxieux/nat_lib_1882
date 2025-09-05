@@ -55,8 +55,7 @@ It contains routes to query and filter the data with client-side fetch requests 
 ### Backend frameworks
 
 #### Started
-- [x] Kotlin with [Ktor](https://ktor.io/)
-- [ ] Go with [OpenAPI-codegen](https://github.com/oapi-codegen/oapi-codegen)
+- [x] Go with [OpenAPI-codegen](https://github.com/oapi-codegen/oapi-codegen)
 
 #### Planned
 - [ ] Java with [Quarkus](https://quarkus.io/)
@@ -64,7 +63,7 @@ It contains routes to query and filter the data with client-side fetch requests 
 - [ ] C# with [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
 
 #### Spec-Complete
-- none so far
+- [x] Kotlin with [Ktor](https://ktor.io/)
 
 ## Database documentation
 

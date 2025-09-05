@@ -467,6 +467,8 @@ components:
         - id
         - number
         - title
+        - manuscript
+        - print
       properties:
         id:
           type: integer
@@ -480,24 +482,17 @@ components:
           type: string
           maxLength: 2048
           description: Book title
-        author:
-          type: string
-          maxLength: 255
-          nullable: true
-          description: Author name (redundant field, see authors relation)
         manuscript:
           type: boolean
-          nullable: true
           description: Whether the book is a manuscript
         print:
           type: boolean
-          nullable: true
           description: Whether the book is printed
         comment:
           type: string
           maxLength: 2048
           nullable: true
-          description: General comment
+          description: Original comment in the source document
         editor_comment:
           type: string
           maxLength: 2048
@@ -511,12 +506,10 @@ components:
         genre:
           allOf:
             - $ref: '#/components/schemas/Genre'
-          nullable: true
           description: Book genre
         endowment:
           allOf:
             - $ref: '#/components/schemas/Endowment'
-          nullable: true
           description: Book endowment
         authors:
           type: array
@@ -527,7 +520,6 @@ components:
         id: 1
         number: 234
         title: "كتاب الأغاني"
-        author: "الأصفهاني، أبو الفرج"
         manuscript: true
         print: false
         comment: "نسخة مخطوطة قديمة"
