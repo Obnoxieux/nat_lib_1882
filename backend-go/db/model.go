@@ -40,7 +40,7 @@ type BookEntity struct {
 	GenreId       int64          `db:"genre_id"`
 	GenreName     string         `db:"genre_name"`
 	EndowmentId   sql.NullInt64  `db:"endowment_id"`
-	EndowmentName string         `db:"endowment_name"`
+	EndowmentName sql.NullString `db:"endowment_name"`
 	Manuscript    bool           `db:"manuscript"`
 	Print         bool           `db:"print"`
 	Comment       sql.NullString `db:"comment"`

@@ -20,7 +20,7 @@ func bookEntityToModel(entity db.BookEntity) Book {
 		},
 		Endowment: Endowment{
 			Id:   entity.EndowmentId.Int64,
-			Name: entity.EndowmentName,
+			Name: entity.EndowmentName.String,
 		},
 		Manuscript:    entity.Manuscript,
 		Print:         entity.Print,
