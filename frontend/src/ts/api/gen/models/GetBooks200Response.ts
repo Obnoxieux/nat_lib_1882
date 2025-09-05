@@ -18,6 +18,7 @@ import {
     BookFromJSON,
     BookFromJSONTyped,
     BookToJSON,
+    BookToJSONTyped,
 } from './Book';
 
 /**
@@ -76,10 +77,15 @@ export function GetBooks200ResponseFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function GetBooks200ResponseToJSON(value?: GetBooks200Response | null): any {
+export function GetBooks200ResponseToJSON(json: any): GetBooks200Response {
+    return GetBooks200ResponseToJSONTyped(json, false);
+}
+
+export function GetBooks200ResponseToJSONTyped(value?: GetBooks200Response | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'items': value['items'] == null ? undefined : ((value['items'] as Array<any>).map(BookToJSON)),

@@ -57,10 +57,15 @@ export function EndowmentFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function EndowmentToJSON(value?: Endowment | null): any {
+export function EndowmentToJSON(json: any): Endowment {
+    return EndowmentToJSONTyped(json, false);
+}
+
+export function EndowmentToJSONTyped(value?: Endowment | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'id': value['id'],

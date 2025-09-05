@@ -469,6 +469,8 @@ components:
         - title
         - manuscript
         - print
+        - genre
+        - endowment
       properties:
         id:
           type: integer
@@ -510,6 +512,7 @@ components:
         endowment:
           allOf:
             - $ref: '#/components/schemas/Endowment'
+          nullable: true
           description: Book endowment
         authors:
           type: array

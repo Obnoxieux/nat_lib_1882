@@ -18,18 +18,21 @@ import {
     AuthorFromJSON,
     AuthorFromJSONTyped,
     AuthorToJSON,
+    AuthorToJSONTyped,
 } from './Author';
 import type { Genre } from './Genre';
 import {
     GenreFromJSON,
     GenreFromJSONTyped,
     GenreToJSON,
+    GenreToJSONTyped,
 } from './Genre';
 import type { Endowment } from './Endowment';
 import {
     EndowmentFromJSON,
     EndowmentFromJSONTyped,
     EndowmentToJSON,
+    EndowmentToJSONTyped,
 } from './Endowment';
 
 /**
@@ -57,25 +60,19 @@ export interface Book {
      */
     title: string;
     /**
-     * Author name (redundant field, see authors relation)
-     * @type {string}
-     * @memberof Book
-     */
-    author?: string;
-    /**
      * Whether the book is a manuscript
      * @type {boolean}
      * @memberof Book
      */
-    manuscript?: boolean;
+    manuscript: boolean;
     /**
      * Whether the book is printed
      * @type {boolean}
      * @memberof Book
      */
-    print?: boolean;
+    print: boolean;
     /**
-     * General comment
+     * Original comment in the source document
      * @type {string}
      * @memberof Book
      */
@@ -97,13 +94,13 @@ export interface Book {
      * @type {Genre}
      * @memberof Book
      */
-    genre?: Genre;
+    genre: Genre;
     /**
      * Book endowment
      * @type {Endowment}
      * @memberof Book
      */
-    endowment?: Endowment;
+    endowment: Endowment;
     /**
      * Authors of the book
      * @type {Array<Author>}
@@ -119,6 +116,10 @@ export function instanceOfBook(value: object): value is Book {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('number' in value) || value['number'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('manuscript' in value) || value['manuscript'] === undefined) return false;
+    if (!('print' in value) || value['print'] === undefined) return false;
+    if (!('genre' in value) || value['genre'] === undefined) return false;
+    if (!('endowment' in value) || value['endowment'] === undefined) return false;
     return true;
 }
 
@@ -135,28 +136,31 @@ export function BookFromJSONTyped(json: any, ignoreDiscriminator: boolean): Book
         'id': json['id'],
         'number': json['number'],
         'title': json['title'],
-        'author': json['author'] == null ? undefined : json['author'],
-        'manuscript': json['manuscript'] == null ? undefined : json['manuscript'],
-        'print': json['print'] == null ? undefined : json['print'],
+        'manuscript': json['manuscript'],
+        'print': json['print'],
         'comment': json['comment'] == null ? undefined : json['comment'],
         'editorComment': json['editor_comment'] == null ? undefined : json['editor_comment'],
         'volume': json['volume'] == null ? undefined : json['volume'],
-        'genre': json['genre'] == null ? undefined : GenreFromJSON(json['genre']),
-        'endowment': json['endowment'] == null ? undefined : EndowmentFromJSON(json['endowment']),
+        'genre': GenreFromJSON(json['genre']),
+        'endowment': EndowmentFromJSON(json['endowment']),
         'authors': json['authors'] == null ? undefined : ((json['authors'] as Array<any>).map(AuthorFromJSON)),
     };
 }
 
-export function BookToJSON(value?: Book | null): any {
+export function BookToJSON(json: any): Book {
+    return BookToJSONTyped(json, false);
+}
+
+export function BookToJSONTyped(value?: Book | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'id': value['id'],
         'number': value['number'],
         'title': value['title'],
-        'author': value['author'],
         'manuscript': value['manuscript'],
         'print': value['print'],
         'comment': value['comment'],

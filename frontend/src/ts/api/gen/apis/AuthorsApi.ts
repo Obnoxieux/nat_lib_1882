@@ -65,8 +65,12 @@ export class AuthorsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authors/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/authors/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -105,8 +109,11 @@ export class AuthorsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authors`;
+
         const response = await this.request({
-            path: `/authors`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -148,8 +155,12 @@ export class AuthorsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authors/{id}/books`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/authors/{id}/books`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

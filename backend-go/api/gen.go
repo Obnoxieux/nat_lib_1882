@@ -25,13 +25,10 @@ type Author struct {
 
 // Book defines model for Book.
 type Book struct {
-	// Author Author name (redundant field, see authors relation)
-	Author string `json:"author"`
-
 	// Authors Authors of the book
 	Authors []Author `json:"authors,omitempty"`
 
-	// Comment General comment
+	// Comment Original comment in the source document
 	Comment string `json:"comment"`
 
 	// EditorComment Editor's comment

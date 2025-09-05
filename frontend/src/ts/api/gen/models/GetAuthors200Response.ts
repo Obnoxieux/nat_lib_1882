@@ -18,6 +18,7 @@ import {
     AuthorFromJSON,
     AuthorFromJSONTyped,
     AuthorToJSON,
+    AuthorToJSONTyped,
 } from './Author';
 
 /**
@@ -76,10 +77,15 @@ export function GetAuthors200ResponseFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function GetAuthors200ResponseToJSON(value?: GetAuthors200Response | null): any {
+export function GetAuthors200ResponseToJSON(json: any): GetAuthors200Response {
+    return GetAuthors200ResponseToJSONTyped(json, false);
+}
+
+export function GetAuthors200ResponseToJSONTyped(value?: GetAuthors200Response | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'items': value['items'] == null ? undefined : ((value['items'] as Array<any>).map(AuthorToJSON)),

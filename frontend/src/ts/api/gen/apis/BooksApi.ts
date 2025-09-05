@@ -61,8 +61,12 @@ export class BooksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/books/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/books/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -121,8 +125,11 @@ export class BooksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/books`;
+
         const response = await this.request({
-            path: `/books`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

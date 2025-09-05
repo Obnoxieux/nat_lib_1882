@@ -64,8 +64,12 @@ export class GenresApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/genres/{id}/books`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/genres/{id}/books`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -99,8 +103,12 @@ export class GenresApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/genres/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/genres/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -127,8 +135,11 @@ export class GenresApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/genres`;
+
         const response = await this.request({
-            path: `/genres`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -141,7 +152,7 @@ export class GenresApi extends runtime.BaseAPI {
      * Retrieve a list of all genres in the catalogue
      * List all genres
      */
-    async getGenres(initOverrides?: RequestInit | runtime.InitOverrideFunction, p0?: { signal: AbortSignal; }): Promise<Array<Genre>> {
+    async getGenres(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Genre>> {
         const response = await this.getGenresRaw(initOverrides);
         return await response.value();
     }

@@ -64,8 +64,12 @@ export class EndowmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/endowments/{id}/books`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/endowments/{id}/books`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -99,8 +103,12 @@ export class EndowmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/endowments/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/endowments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -127,8 +135,11 @@ export class EndowmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/endowments`;
+
         const response = await this.request({
-            path: `/endowments`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -141,7 +152,7 @@ export class EndowmentsApi extends runtime.BaseAPI {
      * Retrieve a list of all endowments in the catalogue
      * List all endowments
      */
-    async getEndowments(initOverrides?: RequestInit | runtime.InitOverrideFunction, p0?: { signal: AbortSignal; }): Promise<Array<Endowment>> {
+    async getEndowments(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Endowment>> {
         const response = await this.getEndowmentsRaw(initOverrides);
         return await response.value();
     }
