@@ -13,6 +13,7 @@ type Server struct {
 	AuthorRepository    db.AuthorRepository
 	EndowmentRepository db.EndowmentRepository
 	GenreRepository     db.GenreRepository
+	BookRepository      db.BookRepository
 }
 
 func NewServer(database *dbx.DB) Server {
@@ -20,6 +21,7 @@ func NewServer(database *dbx.DB) Server {
 		AuthorRepository:    db.PostgresAuthorRepository{DB: database},
 		EndowmentRepository: db.PostgresEndowmentRepository{DB: database},
 		GenreRepository:     db.PostgresGenreRepository{DB: database},
+		BookRepository:      db.PostgresBookRepository{DB: database},
 	}
 }
 
@@ -63,13 +65,31 @@ func (s Server) GetBooksByAuthor(ctx context.Context, request GetBooksByAuthorRe
 // GetBooks List all books
 // (GET /books)
 func (s Server) GetBooks(ctx context.Context, request GetBooksRequestObject) (GetBooksResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	books, err := s.BookRepository.GetFilteredBooks(request.toDBFilter())
+	if err != nil {
+		return nil, err
+	}
+	var response []Book
+	for _, book := range books {
+		response = append(response, bookEntityToModel(book))
+	}
+	return GetBooks200JSONResponse{
+		Items:  response,
+		Limit:  request.Params.Limit,
+		Offset: request.Params.Offset,
+		Total:  len(response),
+	}, nil
 }
 
 // GetBookById Get a specific book
 // (GET /books/{id})
 func (s Server) GetBookById(ctx context.Context, request GetBookByIdRequestObject) (GetBookByIdResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	book, err := s.BookRepository.GetSingleBookByID(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	response := bookEntityToModel(book)
+	return GetBookById200JSONResponse(response), nil
 }
 
 // GetEndowments List all endowments
