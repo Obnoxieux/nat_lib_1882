@@ -59,7 +59,27 @@ func (s Server) GetAuthorById(ctx context.Context, request GetAuthorByIdRequestO
 // GetBooksByAuthor Get books by an author
 // (GET /authors/{id}/books)
 func (s Server) GetBooksByAuthor(ctx context.Context, request GetBooksByAuthorRequestObject) (GetBooksByAuthorResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	booksRequest := GetBooksRequestObject{
+		Params: GetBooksParams{
+			Author: request.Id,
+			Limit:  request.Params.Limit,
+			Offset: request.Params.Offset,
+		},
+	}
+	books, err := s.BookRepository.GetFilteredBooks(booksRequest.toDBFilter())
+	if err != nil {
+		return nil, err
+	}
+	var response []Book
+	for _, book := range books {
+		response = append(response, bookEntityToModel(book))
+	}
+	return GetBooksByAuthor200JSONResponse{
+		Items:  response,
+		Limit:  request.Params.Limit,
+		Offset: request.Params.Offset,
+		Total:  len(response),
+	}, nil
 }
 
 // GetBooks List all books
@@ -120,7 +140,27 @@ func (s Server) GetEndowmentById(ctx context.Context, request GetEndowmentByIdRe
 // GetBooksByEndowment Get books by endowment
 // (GET /endowments/{id}/books)
 func (s Server) GetBooksByEndowment(ctx context.Context, request GetBooksByEndowmentRequestObject) (GetBooksByEndowmentResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	booksRequest := GetBooksRequestObject{
+		Params: GetBooksParams{
+			Endowment: request.Id,
+			Limit:     request.Params.Limit,
+			Offset:    request.Params.Offset,
+		},
+	}
+	books, err := s.BookRepository.GetFilteredBooks(booksRequest.toDBFilter())
+	if err != nil {
+		return nil, err
+	}
+	var response []Book
+	for _, book := range books {
+		response = append(response, bookEntityToModel(book))
+	}
+	return GetBooksByEndowment200JSONResponse{
+		Items:  response,
+		Limit:  request.Params.Limit,
+		Offset: request.Params.Offset,
+		Total:  len(response),
+	}, nil
 }
 
 // GetGenres List all genres
@@ -151,5 +191,25 @@ func (s Server) GetGenreById(ctx context.Context, request GetGenreByIdRequestObj
 // GetBooksByGenre Get books by genre
 // (GET /genres/{id}/books)
 func (s Server) GetBooksByGenre(ctx context.Context, request GetBooksByGenreRequestObject) (GetBooksByGenreResponseObject, error) {
-	panic("not implemented") // TODO: Implement
+	booksRequest := GetBooksRequestObject{
+		Params: GetBooksParams{
+			Genre:  request.Id,
+			Limit:  request.Params.Limit,
+			Offset: request.Params.Offset,
+		},
+	}
+	books, err := s.BookRepository.GetFilteredBooks(booksRequest.toDBFilter())
+	if err != nil {
+		return nil, err
+	}
+	var response []Book
+	for _, book := range books {
+		response = append(response, bookEntityToModel(book))
+	}
+	return GetBooksByGenre200JSONResponse{
+		Items:  response,
+		Limit:  request.Params.Limit,
+		Offset: request.Params.Offset,
+		Total:  len(response),
+	}, nil
 }
