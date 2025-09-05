@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_natlib
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: db
+      POSTGRES_PASSWORD: db
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  ktor:
+    build: ./backend-ktor
+    container_name: ktor_natlib
+    depends_on:
+      - postgres
+    environment:
+      DB_USER: db
+      DB_PASSWORD: db
+      POSTGRES_CONNECTION: jdbc:postgresql://postgres:5432/db
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  go:
+    build: ./backend-go
+    container_name: go_natlib
+    depends_on:
+      - postgres
+    environment:
+      PG_DSN: postgres://db:db@postgres:5432/db?sslmode=disable
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      dockerfile: ./frontend/Dockerfile_dev
+    container_name: frontend_natlib
+    depends_on:
+      - ktor
+      - go
+    ports:
+      - "5173:5173" # Vite dev server
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  pg_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./pg_data
