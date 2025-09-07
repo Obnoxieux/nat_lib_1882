@@ -1,6 +1,9 @@
-var builder = WebApplication.CreateBuilder(args);
+using backend_net.db;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<GenreDb>(options => options.UseInMemoryDatabase("GenreDb"));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
@@ -8,27 +11,11 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.MapGet("/", () => "Evil Microsoft API available.");
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/genres", async (GenreDb db) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-            new WeatherForecast
-            (
-                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                Random.Shared.Next(-20, 55),
-                summaries[Random.Shared.Next(summaries.Length)]
-            ))
-        .ToArray();
-    return forecast;
+    await db.Genres.ToListAsync();
 });
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
