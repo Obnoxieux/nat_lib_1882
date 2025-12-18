@@ -1,70 +1,77 @@
 .book-column-info {
-    margin: 2rem 0;
+  margin: 2rem 0;
 
-    .book-column-info-list {
-        li {
-            margin: 0.5rem 0;
-        }
-
-        dl {
-            dt {
-                font-weight: var(--font-weight-bold);
-            }
-
-            display: grid;
-            grid-template-columns: 10rem 1fr;
-        }
+  .book-column-info-list {
+    li {
+      margin: 0.5rem 0;
     }
+
+    dl {
+      dt {
+        font-weight: var(--font-weight-bold);
+      }
+
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+    }
+  }
 }
 
 .books-table-section {
-    .books-table-header {
-        margin-bottom: 1.5rem;
-    }
+  .books-table-header {
+    margin-bottom: 1.5rem;
+  }
 
-    .form-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .book-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-bottom: 2.5rem;
 
-    @media (min-width: 768px) {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  input, select {
+    margin-bottom: 0;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    gap: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    label {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.5rem;
+      margin-bottom: 0;
     }
+  }
 
-    @media (min-width: 1024px) {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1.25rem;
+  label {
+    .legend {
+      color: var(--body-color-secondary);
+      font-size: var(--font-size-smallish);
     }
-
-    input, select {
-        margin-bottom: 0;
-    }
-
-    .checkbox-container {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-        gap: 0.5rem;
-        border: 1px solid var(--border-color);
-        border-radius: var(--border-radius-md);
-
-        box-shadow: var(--shadow-sm);
-
-        label {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            padding: 0.5rem;
-            margin-bottom: 0;
-        }
-    }
+  }
 }

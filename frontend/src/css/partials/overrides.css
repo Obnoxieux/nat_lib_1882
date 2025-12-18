@@ -1,47 +1,47 @@
 /* Dark mode uses media query instead of CSS variable */
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --primary: #13181f;
-        --primary-contrast: #13181f;
-        --primary-invert: #cbe0ff;
-        --body-bg: #0f172a;
-        --body-color: #e2e8f0;
-        --heading-color: #f8fafc;
-        --border-color: #334155;
-        --shadow-color: rgba(0, 0, 0, 0.3);
-        --card-bg: #1e293b;
-        --link-color: #61aeff;
-        --progress-color: #2f9e45;
-        --input-icon-color: #e2e8f0;
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-    }
+  :root {
+    --primary: #13181f;
+    --primary-contrast: #13181f;
+    --primary-invert: #cbe0ff;
+    --body-bg: #0f172a;
+    --body-color: #e2e8f0;
+    --heading-color: #f8fafc;
+    --border-color: #334155;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --card-bg: #1e293b;
+    --link-color: #61aeff;
+    --progress-color: #2f9e45;
+    --input-icon-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
 
-    code {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
+  code {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
-    pre {
-        background-color: rgba(255, 255, 255, 0.05);
-    }
+  pre {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
 
-    blockquote {
-        background-color: rgba(255, 255, 255, 0.03);
-    }
+  blockquote {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
 
-    tr:hover td {
-        background-color: rgba(255, 255, 255, 0.03);
-    }
+  tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
 
-    select {
-        background-image: url("data:image/svg+xml;utf8,<svg fill='%23e2e8f0' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    }
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23e2e8f0' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  }
 
-    .glass {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  .glass {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
