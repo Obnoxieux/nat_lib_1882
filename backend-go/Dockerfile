@@ -11,4 +11,4 @@ FROM debian:trixie-slim
 WORKDIR /app
 COPY --from=build /app/natlib /app/natlib
 EXPOSE 8090
-CMD ["./app"]
+CMD ["./natlib"]
