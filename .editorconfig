@@ -28,5 +28,5 @@ indent_size = 2
 [*.{md,mdx}]
 trim_trailing_whitespace = false
 
-[*.{htm,html,js,jsm,ts,tsx,cjs,mjs,mts,mtsx,css,sass,svg,vue,svelte}]
+[*.{htm,html,hbs,js,jsm,ts,tsx,cjs,mjs,mts,mtsx,css,sass,svg,vue,svelte}]
 indent_size = 2
