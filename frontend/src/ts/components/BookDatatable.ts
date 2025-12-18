@@ -24,7 +24,7 @@ export class BookDatatable extends LitElement {
   print = false;
 
   @property({type: Number})
-  author: number | null | undefined = undefined;
+  author: number | undefined = undefined;
 
   @property({type: Number})
   genre = 0;
@@ -179,7 +179,7 @@ export class BookDatatable extends LitElement {
                     .value=${live(this.author ?? "")}
                     @change=${this.handleAuthorChange}
             >
-            <span class="legend">Start typing (in Arabic script) to get suggestions</span>
+            <span class="legend">Start typing in Arabic script to get suggestions</span>
           </label>
 
           <datalist id="authors-suggestion-list">
