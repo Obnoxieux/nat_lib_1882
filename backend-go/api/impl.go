@@ -9,6 +9,8 @@ import (
 
 var _ StrictServerInterface = (*Server)(nil)
 
+const DefaultLimit = 100
+
 type Server struct {
 	AuthorRepository    db.AuthorRepository
 	EndowmentRepository db.EndowmentRepository
@@ -85,6 +87,10 @@ func (s Server) GetBooksByAuthor(ctx context.Context, request GetBooksByAuthorRe
 // GetBooks List all books
 // (GET /books)
 func (s Server) GetBooks(ctx context.Context, request GetBooksRequestObject) (GetBooksResponseObject, error) {
+	if request.Params.Limit == 0 {
+		request.Params.Limit = DefaultLimit
+	}
+
 	books, err := s.BookRepository.GetFilteredBooks(request.toDBFilter())
 	if err != nil {
 		return nil, err
