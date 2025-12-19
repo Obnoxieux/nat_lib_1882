@@ -10,7 +10,7 @@ export class EndowmentTable extends LitElement {
 
   private _endowmentTask = new Task(this, {
     task: async ([], {signal}) => {
-      const response = await this._endowmentClient.getEndowments({}, {signal});
+      const response = await this._endowmentClient.getEndowments({signal});
       return response;
     },
     args: () => []

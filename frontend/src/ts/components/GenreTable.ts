@@ -10,7 +10,7 @@ export class GenreTable extends LitElement {
 
   private _genreTask = new Task(this, {
     task: async ([], {signal}) => {
-      const response = await this._genreClient.getGenres({}, {signal});
+      const response = await this._genreClient.getGenres({signal});
       return response;
     },
     args: () => []
