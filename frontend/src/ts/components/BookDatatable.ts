@@ -280,6 +280,8 @@ export class BookDatatable extends LitElement {
     }
   }
 
+  // TODO: pagination
+
   protected handleAuthorChange(e: Event) {
     const value = (e.target as HTMLInputElement).value.trim();
     this.author = value === "" ? undefined : Number(value);

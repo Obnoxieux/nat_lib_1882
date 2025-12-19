@@ -1,22 +1,60 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Home Page</title>
-        <meta content="Damascus Public Library Catalogue" name="description">
-        {{> head }}
-    </head>
-    <body>
-        {{> nav }}
+<head>
+  <title>Home Page</title>
+  <meta content="Damascus Public Library Catalogue" name="description">
+  {{> head }}
+</head>
+<body>
+{{> nav }}
 
-        <main>
-            <h1>Damascus Public Library Catalogue</h1>
-            <p>
-                This project provides a searchable database and REST API with
-                the historical catalogue data for the Damascus Public Library
-                after its founding in 1882.
-            </p>
-        </main>
+<main class="reading-container">
+  <h1>Damascus Public Library Catalogue</h1>
+  <p>
+    This project provides a searchable database and REST API with
+    the historical catalogue data for the Damascus Public Library
+    after its founding in 1882.
+  </p>
 
-        {{> footer }}
-    </body>
+  <h2>University background</h2>
+  <p>I majored in Islamic Studies (MA) in 2018. Part of my MA thesis was an analysis of a library catalogue that was
+    created in Damascus in 1882. Back then, all previously independent collections of endowed books and manuscripts were
+    collected and put together into a newly established public library, which later became the Syrian National Library
+    after independence.
+  </p>
+
+  <p>The catalogue for this new library was a printed book detailing every single item and its provenance and therefore
+    alluring for the study of the history of reading and scholarly life.
+  </p>
+
+  <p>
+    Back in 2018 I compiled this (manually) into a LibreOffice Base database (having no clue about databases I used a
+    single table) and used it for my research.
+  </p>
+
+  <h2>Current Situation</h2>
+
+  <p>
+    I now work as a software developer <a href="https://obnx.dev/" target="_blank">(my website)</a>, having left
+    academia and the
+    humanities behind. However, this project still holds a special
+    place in my heart and provides me with a great opportunity to bridge my interests.
+  </p>
+  <h3>What I did here</h3>
+  <p>
+    I normalized the original Base documents and created a proper relational database in PostgreSQL for it.
+    Then, I created a small web application to provide a searchable interface for the catalogue.
+  </p>
+  <h2>Ways to query the data</h2>
+  <p>
+    There are two ways to query the data:
+  </p>
+  <ul>
+    <li>Using the web interface (the site you are reading right now)</li>
+    <li>Using the REST API</li>
+  </ul>
+</main>
+
+{{> footer }}
+</body>
 </html>
