@@ -9,8 +9,62 @@
 
 <main class="reading-container">
   <h1>User Manual</h1>
+  <small>Jump to section:</small>
+  <a href="#web-interface-header">Web Interface</a>
+  <span> | </span>
+  <a href="#rest-api-header">Rest API</a>
 
+  <h2 id="web-interface-header">Web Interface</h2>
+  <p>
+    The main entry point for web queries id the <code>Catalogue</code> page. It contains a filter and search form that
+    should be
+    pretty
+    self-explanatory. Some additional information:
+  </p>
+  <ul>
+    <li>The form fields for authors, genres and endowments expect ID values, but all contain either
+      autocomplete functionality or all available options are provided in select fields.
+    </li>
+    <li>
+      The <code>Authors</code>, <code>Genres</code> and <code>Endowments</code> pages contain full lists of all
+      entries in the database.
+    </li>
+    <li>IDs found there can be used for manual querying.</li>
+    <li>As of now, there is no export functionality for JSON or CSV files (it's on the roadmap).</li>
+  </ul>
 
+  <hr>
+
+  <h2 id="rest-api-header">Rest API</h2>
+  <p>
+    If you prefer to go the direct route, you can also use the REST API directly to query the data. The documentation
+    can be found in the main menu in OpenAPI format. Some quick facts:
+  </p>
+
+  <ul>
+    <li>The API is served on <code>https://api.natlib.obnx.dev</code></li>
+    <li>The only supported method is <code>GET</code>.</li>
+    <li>There is no authentication, everything is freely available.</li>
+    <li>Please be nice and don't abuse this power – the whole project runs on a cheap Hetzner VPS.</li>
+    <li>CORS-headers are set to <code>*</code>.</li>
+  </ul>
+
+  <section>
+    <header>
+      <h3>Self-Hosting</h3>
+    </header>
+    <p>
+      If you are feeling particularly adventurous: the whole project as well as the database is open source and can
+      be freely forked and copied.
+    </p>
+    <p>
+      Setup is intentionally a bit overengineered though. You can read up on the project quirks in the
+      <a href="https://github.com/Obnoxieux/nat_lib_1882"
+         target="_blank">
+        Repository README
+      </a>.
+    </p>
+  </section>
 </main>
 
 {{> footer }}
