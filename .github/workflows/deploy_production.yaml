@@ -1,0 +1,38 @@
+name: Deploy Production (Docker)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push Docker images
+        run: |
+          cd backend-ktor
+          docker build -t obnoxieux/natlib-ktor:latest .
+          docker push obnoxieux/natlib-ktor:latest
+          cd ../backend-go
+          docker build -t obnoxieux/natlib-go:latest .
+          docker push obnoxieux/natlib-go:latest
+          cd ../frontend
+          docker build -t obnoxieux/natlib-frontend:latest .
+          docker push obnoxieux/natlib-frontend:latest
+
+      - name: Trigger Portainer deployment
+        run: |
+          curl -X POST ${{ secrets.PORTAINER_WEBHOOK_URL }}

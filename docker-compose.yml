@@ -1,0 +1,78 @@
+services:
+  ktor:
+    image: obnoxieux/natlib-ktor:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_CONNECTION: ${JDBC_POSTGRES_CONNECTION}
+    networks:
+      - internal
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.natlib-api.rule=Host(`api.natlib.obnx.dev`)"
+      - "traefik.http.routers.natlib-api.entrypoints=websecure"
+      - "traefik.http.routers.natlib-api.tls.certresolver=letsEncrypt"
+      - "traefik.http.routers.natlib-api.tls=true"
+      - "traefik.http.services.natlib-api.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+  go:
+    image: obnoxieux/natlib-go:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      PG_DSN: ${PG_DSN}
+    networks:
+      - internal
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      # Same router rule → same API
+      - "traefik.http.routers.natlib-api.rule=Host(`api.natlib.obnx.dev`)"
+      - "traefik.http.routers.natlib-api.entrypoints=websecure"
+      - "traefik.http.routers.natlib-api.tls.certresolver=letsEncrypt"
+      - "traefik.http.routers.natlib-api.tls=true"
+      - "traefik.http.services.natlib-api.loadbalancer.server.port=8090"
+      - "traefik.docker.network=proxy"
+
+  frontend:
+    image: obnoxieux/natlib-frontend:latest
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.natlib-web.rule=Host(`natlib.obnx.dev`)"
+      - "traefik.http.routers.natlib-web.entrypoints=websecure"
+      - "traefik.http.routers.natlib-web.tls.certresolver=letsEncrypt"
+      - "traefik.http.routers.natlib-web.tls=true"
+      - "traefik.http.services.natlib-web.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+
+  postgres:
+    image: postgres:18-alpine
+    command: postgres -c listen_addresses='*'
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST_AUTH_METHOD: password
+    networks:
+      - internal
+    volumes:
+      - pg_data:/var/lib/postgresql
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true
+  internal:
+    driver: bridge
+
+volumes:
+  pg_data:
