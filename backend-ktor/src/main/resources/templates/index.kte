@@ -1,7 +1,0 @@
-@import dev.obnx.model.Page
-@param page: Page
-
-@template.layouts.root(page = page, content = @`
-    <h1>Damascus Public Library Catalogue</h1>
-    <p>HTML landing page for the Kotlin backend API.</p>
-`)
