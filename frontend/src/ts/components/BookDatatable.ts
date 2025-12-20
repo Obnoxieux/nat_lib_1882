@@ -35,8 +35,14 @@ export class BookDatatable extends LitElement {
   @property({type: Number})
   itemsPerPage = 10;
 
+  @property({type: Number})
+  offset = 0;
+
   @property({type: String})
   search = "";
+
+  @state()
+  currentPage = 1;
 
   @state()
   showFilter = true;
@@ -49,7 +55,7 @@ export class BookDatatable extends LitElement {
   private _bookTask = new Task(this, {
     task: async (
         [
-          author, manuscript, print, genre, endowment, itemsPerPage, search
+          author, manuscript, print, genre, endowment, itemsPerPage, offset, search
         ], {signal}) => {
       const requestConfig: GetBooksRequest = {
         author: author !== 0 ? author : undefined,
@@ -58,13 +64,14 @@ export class BookDatatable extends LitElement {
         genre: genre !== 0 ? genre : undefined,
         endowment: endowment !== 0 ? endowment : undefined,
         limit: itemsPerPage,
+        offset: offset,
         search: search !== "" ? search : undefined,
       };
       const response = await this._bookClient.getBooks(requestConfig, {signal});
       return response;
     },
     args: () => [
-      this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage, this.search,
+      this.author, this.manuscript, this.print, this.genre, this.endowment, this.itemsPerPage, this.offset, this.search,
     ],
   });
 
@@ -104,7 +111,19 @@ export class BookDatatable extends LitElement {
 
       ${this.getForm()}
 
-      <h3>Results</h3>
+      <div class="table-results-header">
+        <h3>Results</h3>
+
+        <div class="pagination-container">
+          <span>
+            Current Page:
+            <code>${this.currentPage}</code>
+          </span>
+          <button @click=${this.resetPage} class="outline">First</button>
+          <button @click=${this.decrementPage} class="outline">Previous</button>
+          <button @click=${this.incrementPage} class="outline">Next</button>
+        </div>
+      </div>
 
       <table>
         <thead>
@@ -139,22 +158,22 @@ export class BookDatatable extends LitElement {
           `,
           complete: (response: GetBooks200Response) => html`
             ${response.items?.map((book) => html`
-                      <tr>
-                        <td>${book.id ?? ''}</td>
-                        <td>${book.number ?? ''}</td>
-                        <td dir="rtl" lang="ar">${book.title ?? ''}</td>
-                        <td dir="rtl" lang="ar">
-                          ${book.authors?.map(a => html`<span>${a.name}</span>`)}
-                        </td>
-                        <td dir="rtl" lang="ar">${book.genre?.name ?? ''}</td>
-                        <td dir="rtl" lang="ar">${book.endowment?.name ?? ''}</td>
-                        <td class="text-center">${book.manuscript ? '✅' : '❌'}</td>
-                        <td class="text-center">${book.print ? '✅' : '❌'}</td>
-                        <td>${book.volume ?? ''}</td>
-                        <td dir="rtl" lang="ar">${book.comment ?? ''}</td>
-                        <td>${book.editorComment ?? ''}</td>
-                      </tr>
-                    `
+                <tr>
+                  <td>${book.id ?? ''}</td>
+                  <td>${book.number ?? ''}</td>
+                  <td dir="rtl" lang="ar">${book.title ?? ''}</td>
+                  <td dir="rtl" lang="ar">
+                    ${book.authors?.map(a => html`<span>${a.name}</span>`)}
+                  </td>
+                  <td dir="rtl" lang="ar">${book.genre?.name ?? ''}</td>
+                  <td dir="rtl" lang="ar">${book.endowment?.name ?? ''}</td>
+                  <td class="text-center">${book.manuscript ? '✅' : '❌'}</td>
+                  <td class="text-center">${book.print ? '✅' : '❌'}</td>
+                  <td>${book.volume ?? ''}</td>
+                  <td dir="rtl" lang="ar">${book.comment ?? ''}</td>
+                  <td>${book.editorComment ?? ''}</td>
+                </tr>
+              `
             )}
           `
         })}
@@ -280,8 +299,6 @@ export class BookDatatable extends LitElement {
     }
   }
 
-  // TODO: pagination
-
   protected handleAuthorChange(e: Event) {
     const value = (e.target as HTMLInputElement).value.trim();
     this.author = value === "" ? undefined : Number(value);
@@ -305,8 +322,23 @@ export class BookDatatable extends LitElement {
 
   protected handleItemsPerPageChange(e: Event) {
     this.itemsPerPage = Number((e.target as HTMLSelectElement).value);
+    this.resetPage();
   }
 
+  protected resetPage() {
+    this.offset = 0;
+    this.currentPage = 1;
+  }
+
+  protected incrementPage() {
+    this.offset += this.itemsPerPage;
+    this.currentPage++;
+  }
+
+  protected decrementPage() {
+    this.offset -= this.itemsPerPage;
+    this.currentPage--;
+  }
 
   protected createRenderRoot() {
     return this;
