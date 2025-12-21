@@ -25,6 +25,7 @@ jobs:
         run: |
           cd frontend
           cat > .env.production <<'EOF'
+          VITE_BACKEND_URL="${{ vars.VITE_BACKEND_URL }}"
           VITE_EMAIL_ADDRESS="${{ vars.VITE_EMAIL_ADDRESS }}"
           VITE_PHONE="${{ vars.VITE_PHONE }}"
           VITE_HOME_ADDRESS="${{ vars.VITE_HOME_ADDRESS }}"
